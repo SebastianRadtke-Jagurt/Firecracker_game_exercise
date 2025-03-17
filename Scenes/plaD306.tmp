@@ -1,0 +1,144 @@
+[gd_scene load_steps=19 format=3 uid="uid://b0hx5nkucpnjs"]
+
+[ext_resource type="Script" path="res://Scripts/Player.gd" id="1_4r356"]
+[ext_resource type="Texture2D" uid="uid://ogixvk0fa3d" path="res://Assets/Kenney_Tiny_Dungeon/Tiles/tile_0085.png" id="1_5g541"]
+[ext_resource type="Script" path="res://Scripts/States/StateIdle.gd" id="2_p7yon"]
+[ext_resource type="AnimationLibrary" uid="uid://c5n8vec23cjrw" path="res://Scenes/player_anim_lib.tres" id="3_jndd0"]
+[ext_resource type="Script" path="res://Scripts/Hurtbox.gd" id="4_7eghw"]
+[ext_resource type="Script" path="res://Scripts/States/StateMoving.gd" id="4_wq3en"]
+[ext_resource type="Script" path="res://Scripts/States/StateDashing.gd" id="5_ksbjp"]
+[ext_resource type="Script" path="res://Scripts/States/StateStaggered.gd" id="6_6bp4v"]
+[ext_resource type="Script" path="res://Scripts/States/StateAttackSequence.gd" id="7_lmfvp"]
+[ext_resource type="Script" path="res://Scripts/States/Attack.gd" id="8_l526k"]
+[ext_resource type="Texture2D" uid="uid://o6tdeo2pshaq" path="res://Assets/Kenney_Tiny_Dungeon/Tiles/tile_0104.png" id="9_aesfj"]
+[ext_resource type="Script" path="res://Scripts/States/StateTakeDamage.gd" id="10_cgrqn"]
+[ext_resource type="Script" path="res://Scripts/States/StateTakeKnockback.gd" id="11_6g0cf"]
+[ext_resource type="AudioStream" uid="uid://cfaamtw61do72" path="res://Assets/Kenney_Audio/kenney_impact-sounds/Audio/impactMining_002.ogg" id="14_13xwg"]
+[ext_resource type="Script" path="res://Scripts/DeflectBuff.gd" id="14_rxg5q"]
+[ext_resource type="Script" path="res://Scripts/DeflectBuffApplier.gd" id="14_skhl4"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kn6of"]
+radius = 8.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xhn5g"]
+radius = 12.055
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("anim_player", "hurtbox", "attack_audio_player", "weapon_root", "weapon_offset", "current_state")]
+collision_layer = 4
+script = ExtResource("1_4r356")
+base_health = 100
+anim_player = NodePath("AnimationPlayer")
+hurtbox = NodePath("sword_root/sword_offset/sword_parent/hurtbox_Area2D")
+attack_audio_player = NodePath("AttackSoundPlayer")
+weapon_root = NodePath("sword_root")
+weapon_offset = NodePath("sword_root/sword_offset")
+hitbox_layer = 3
+hurtbox_mask = 2
+current_state = NodePath("States/idle")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_kn6of")
+
+[node name="sprite_offset" type="Node2D" parent="CollisionShape2D"]
+position = Vector2(0, -1)
+
+[node name="Sprite2D" type="Sprite2D" parent="CollisionShape2D/sprite_offset"]
+texture_filter = 1
+texture_repeat = 1
+texture = ExtResource("1_5g541")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": ExtResource("3_jndd0")
+}
+
+[node name="sword_root" type="Node2D" parent="."]
+
+[node name="sword_offset" type="Node2D" parent="sword_root"]
+
+[node name="sword_parent" type="Node2D" parent="sword_root/sword_offset"]
+position = Vector2(0, 20)
+
+[node name="Sprite2D" type="Sprite2D" parent="sword_root/sword_offset/sword_parent"]
+rotation = 3.14159
+texture = ExtResource("9_aesfj")
+
+[node name="hurtbox_Area2D" type="Area2D" parent="sword_root/sword_offset/sword_parent"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("4_7eghw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="sword_root/sword_offset/sword_parent/hurtbox_Area2D"]
+shape = SubResource("CircleShape2D_xhn5g")
+
+[node name="States" type="Node" parent="."]
+
+[node name="idle" type="Node" parent="States"]
+script = ExtResource("2_p7yon")
+
+[node name="moving" type="Node" parent="States"]
+script = ExtResource("4_wq3en")
+
+[node name="dashing" type="Node" parent="States"]
+script = ExtResource("5_ksbjp")
+dashing_speed = 3.0
+state_time_max = 0.3
+
+[node name="staggered" type="Node" parent="States"]
+script = ExtResource("6_6bp4v")
+
+[node name="take_damage" type="Node" parent="States"]
+script = ExtResource("10_cgrqn")
+
+[node name="take_knockback" type="Node" parent="States"]
+script = ExtResource("11_6g0cf")
+
+[node name="attack_seq_1" type="Node" parent="States"]
+script = ExtResource("7_lmfvp")
+
+[node name="1" type="Node" parent="States/attack_seq_1"]
+script = ExtResource("8_l526k")
+animation_name = "attack_single_1"
+damage = 2
+stagger = 2
+knockback = 5
+attack_time = 0.2
+next_attack_delay = 0.1
+displacement = 3.0
+
+[node name="2" type="Node" parent="States/attack_seq_1"]
+script = ExtResource("8_l526k")
+animation_name = "attack_single_2"
+damage = 2
+stagger = 2
+knockback = 5
+attack_time = 0.2
+next_attack_delay = 0.1
+displacement = 3.0
+
+[node name="3" type="Node" parent="States/attack_seq_1"]
+script = ExtResource("8_l526k")
+animation_name = "attack_single_3"
+damage = 4
+stagger = 4
+knockback = 5
+attack_time = 0.3
+next_attack_delay = 0.2
+
+[node name="AttackSoundPlayer" type="AudioStreamPlayer2D" parent="."]
+
+[node name="Buffs" type="Node" parent="."]
+
+[node name="DeflectBuffApplier" type="Node" parent="Buffs" node_paths=PackedStringArray("actor", "buff_to_apply")]
+script = ExtResource("14_skhl4")
+actor = NodePath("../..")
+buff_to_apply = NodePath("DeflectBuff")
+
+[node name="DeflectSound" type="AudioStreamPlayer2D" parent="Buffs/DeflectBuffApplier"]
+stream = ExtResource("14_13xwg")
+volume_db = 10.0
+
+[node name="DeflectBuff" type="Node" parent="Buffs/DeflectBuffApplier"]
+script = ExtResource("14_rxg5q")
+
+[connection signal="body_entered" from="sword_root/sword_offset/sword_parent/hurtbox_Area2D" to="sword_root/sword_offset/sword_parent/hurtbox_Area2D" method="_on_body_entered"]

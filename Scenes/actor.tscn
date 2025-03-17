@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://6hqn486yqq7e"]
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_knqmm"]
+graph_offset = Vector2(-100, -64)
+
+[node name="Actor" type="Node2D"]
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource("AnimationNodeStateMachine_knqmm")

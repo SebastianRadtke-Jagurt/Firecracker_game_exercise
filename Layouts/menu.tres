@@ -1,0 +1,45 @@
+[gd_resource type="Theme" load_steps=8 format=3 uid="uid://dj2tjnejicmva"]
+
+[ext_resource type="FontFile" uid="uid://q075760un64b" path="res://Assets/Kenneys_Fonts/Kenney Mini Square.ttf" id="1_2wrm8"]
+[ext_resource type="Texture2D" uid="uid://difermm8lrlpq" path="res://Assets/Kenney_UI_Pack_Adventure_Default/panel_brown_damaged.png" id="1_06snx"]
+[ext_resource type="Texture2D" uid="uid://beuaoppewo6dl" path="res://Assets/Kenney_UI_Pack_Adventure_Default/panel_brown_dark.png" id="1_xbhn4"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_phedk"]
+texture = ExtResource("1_xbhn4")
+texture_margin_left = 10.0
+texture_margin_top = 10.0
+texture_margin_right = 10.0
+texture_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_h33ho"]
+texture = ExtResource("1_xbhn4")
+texture_margin_left = 10.0
+texture_margin_top = 10.0
+texture_margin_right = 10.0
+texture_margin_bottom = 10.0
+modulate_color = Color(0.85, 0.85, 0.85, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_25y6k"]
+texture = ExtResource("1_xbhn4")
+texture_margin_left = 10.0
+texture_margin_top = 10.0
+texture_margin_right = 10.0
+texture_margin_bottom = 10.0
+modulate_color = Color(0.7, 0.7, 0.7, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8bfqv"]
+texture = ExtResource("1_06snx")
+texture_margin_left = 10.0
+texture_margin_top = 10.0
+texture_margin_right = 10.0
+texture_margin_bottom = 10.0
+
+[resource]
+Button/font_sizes/font_size = 24
+Button/fonts/font = ExtResource("1_2wrm8")
+Button/styles/hover = SubResource("StyleBoxTexture_phedk")
+Button/styles/normal = SubResource("StyleBoxTexture_h33ho")
+Button/styles/pressed = SubResource("StyleBoxTexture_25y6k")
+Label/font_sizes/font_size = 24
+Label/fonts/font = ExtResource("1_2wrm8")
+Panel/styles/panel = SubResource("StyleBoxTexture_8bfqv")

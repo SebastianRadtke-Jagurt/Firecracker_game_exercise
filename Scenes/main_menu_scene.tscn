@@ -1,0 +1,272 @@
+[gd_scene load_steps=8 format=3 uid="uid://dt3bjeyi7wskb"]
+
+[ext_resource type="Script" path="res://Scripts/MainMenu.gd" id="1_w651j"]
+[ext_resource type="Theme" uid="uid://dj2tjnejicmva" path="res://Layouts/menu.tres" id="2_7kjcu"]
+[ext_resource type="Script" path="res://Scripts/VolumeSettings.gd" id="2_d5nvu"]
+[ext_resource type="AudioStream" uid="uid://c8q5ycxoqurtv" path="res://Assets/Kenney_Audio/kenney_interface-sounds/Audio/bong_001.ogg" id="3_iweo2"]
+[ext_resource type="Theme" uid="uid://doxludjd65x6r" path="res://Layouts/audio_layouts/audio.tres" id="3_pj4va"]
+[ext_resource type="Theme" uid="uid://da85xqlgbylpq" path="res://Layouts/music.tres" id="4_j673s"]
+[ext_resource type="AudioStream" uid="uid://dpoqjkkvsewfc" path="res://Assets/UnderSiege!_byDarrenCurtis.ogg" id="6_8xmlt"]
+
+[node name="MainMenuScene" type="Node2D"]
+
+[node name="UI" type="Control" parent="."]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1344.0
+offset_bottom = 703.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_w651j")
+
+[node name="VolumeSettings" type="Node" parent="UI" node_paths=PackedStringArray("sound_slider", "sound_label", "sound_button", "music_player", "music_slider", "music_label", "music_button")]
+script = ExtResource("2_d5nvu")
+sound_slider = NodePath("../Menu/MarginContainer/VBoxContainer/Sound/sound_HSlider")
+sound_label = NodePath("../Menu/MarginContainer/VBoxContainer/Sound/Label")
+sound_button = NodePath("../Menu/MarginContainer/VBoxContainer/Sound/sound_Button")
+music_player = NodePath("../../AudioStreamPlayer")
+music_slider = NodePath("../Menu/MarginContainer/VBoxContainer/Music/music_HSlider")
+music_label = NodePath("../Menu/MarginContainer/VBoxContainer/Music/Label")
+music_button = NodePath("../Menu/MarginContainer/VBoxContainer/Music/music_Button")
+
+[node name="OneTimePlayer" type="AudioStreamPlayer" parent="UI/VolumeSettings"]
+stream = ExtResource("3_iweo2")
+
+[node name="Menu" type="Panel" parent="UI"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.315476
+anchor_top = 0.130952
+anchor_right = 0.6875
+anchor_bottom = 0.875
+offset_top = -1.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_7kjcu")
+metadata/_edit_use_anchors_ = true
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/Menu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 50.0
+offset_top = 141.0
+offset_right = -50.0002
+offset_bottom = -47.1074
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Menu/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="HSeparator3" type="HSeparator" parent="UI/Menu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Start" type="Button" parent="UI/Menu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_7kjcu")
+text = "Start"
+
+[node name="HSeparator" type="HSeparator" parent="UI/Menu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Sound" type="Control" parent="UI/Menu/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+
+[node name="sound_HSlider" type="HSlider" parent="UI/Menu/MarginContainer/VBoxContainer/Sound"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 67.0
+offset_top = -8.0
+offset_right = 311.0
+offset_bottom = 8.0
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="UI/Menu/MarginContainer/VBoxContainer/Sound"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -10.0
+offset_bottom = 10.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.364706, 0.25098, 0.129412, 1)
+text = "999"
+horizontal_alignment = 1
+
+[node name="sound_Button" type="Button" parent="UI/Menu/MarginContainer/VBoxContainer/Sound"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 0.000244141
+offset_top = -28.6426
+offset_right = 57.0002
+offset_bottom = 28.3574
+grow_vertical = 2
+theme = ExtResource("3_pj4va")
+toggle_mode = true
+
+[node name="Music" type="Control" parent="UI/Menu/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+
+[node name="music_HSlider" type="HSlider" parent="UI/Menu/MarginContainer/VBoxContainer/Music"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 67.0
+offset_top = -8.0
+offset_right = 311.0
+offset_bottom = 8.0
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="UI/Menu/MarginContainer/VBoxContainer/Music"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -10.0
+offset_bottom = 10.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.364706, 0.25098, 0.129412, 1)
+text = "999"
+horizontal_alignment = 1
+
+[node name="music_Button" type="Button" parent="UI/Menu/MarginContainer/VBoxContainer/Music"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -2.99976
+offset_top = -30.6426
+offset_right = 54.0002
+offset_bottom = 26.3574
+grow_vertical = 2
+theme = ExtResource("4_j673s")
+toggle_mode = true
+
+[node name="HSeparator2" type="HSeparator" parent="UI/Menu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Credits" type="Button" parent="UI/Menu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_7kjcu")
+text = "Credits"
+
+[node name="Label" type="Label" parent="UI/Menu"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 0.000244141
+offset_top = 14.3574
+offset_bottom = 152.357
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.803922, 0.223529, 0, 1)
+theme_override_font_sizes/font_size = 64
+text = "Firecracker"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Credits" type="Panel" parent="UI"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -248.0
+offset_top = -260.441
+offset_right = 252.0
+offset_bottom = 262.625
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_7kjcu")
+
+[node name="Label" type="Label" parent="UI/Credits"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -186.0
+offset_top = -180.0
+offset_right = 186.0
+offset_bottom = 180.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.364706, 0.25098, 0.129412, 1)
+horizontal_alignment = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/Credits"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -248.0
+offset_top = -194.533
+offset_right = 248.0
+offset_bottom = 194.467
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/default_color = Color(0.364706, 0.25098, 0.129412, 1)
+theme_override_font_sizes/normal_font_size = 24
+bbcode_enabled = true
+text = "[center]
+[font_size={22}] Programming and Game Design[/font_size]
+Sebas Fealunn
+
+[font_size={22}]Art[/font_size]
+Acquired from kenney.nl
+
+[font_size={22}]Sounds[/font_size]
+Acquired from freesound.org
+
+[font_size={22}]Music[/font_size]
+Under Siege by Darren Curtis
+[/center]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("6_8xmlt")
+volume_db = -15.0
+autoplay = true
+
+[connection signal="pressed" from="UI/Menu/MarginContainer/VBoxContainer/Start" to="UI" method="_on_start_pressed"]
+[connection signal="drag_ended" from="UI/Menu/MarginContainer/VBoxContainer/Sound/sound_HSlider" to="UI/VolumeSettings" method="_on_sound_h_slider_drag_ended"]
+[connection signal="value_changed" from="UI/Menu/MarginContainer/VBoxContainer/Sound/sound_HSlider" to="UI/VolumeSettings" method="_on_sound_h_slider_value_changed"]
+[connection signal="toggled" from="UI/Menu/MarginContainer/VBoxContainer/Sound/sound_Button" to="UI/VolumeSettings" method="_on_sound_button_toggled"]
+[connection signal="drag_ended" from="UI/Menu/MarginContainer/VBoxContainer/Music/music_HSlider" to="UI/VolumeSettings" method="_on_music_h_slider_drag_ended"]
+[connection signal="value_changed" from="UI/Menu/MarginContainer/VBoxContainer/Music/music_HSlider" to="UI/VolumeSettings" method="_on_music_h_slider_value_changed"]
+[connection signal="toggled" from="UI/Menu/MarginContainer/VBoxContainer/Music/music_Button" to="UI/VolumeSettings" method="_on_music_button_toggled"]
+[connection signal="pressed" from="UI/Menu/MarginContainer/VBoxContainer/Credits" to="UI" method="_on_credits_pressed"]

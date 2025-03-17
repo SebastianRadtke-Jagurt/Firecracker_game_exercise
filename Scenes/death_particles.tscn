@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://cixfkjn0ns5dk"]
+
+[ext_resource type="Texture2D" uid="uid://fnvl3krthqv" path="res://Assets/plus_8x8.png" id="1_voi34"]
+[ext_resource type="Script" path="res://Scripts/OneTimeParticles.gd" id="2_re2v6"]
+
+[sub_resource type="Curve" id="Curve_qiapp"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.76, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Curve" id="Curve_mgewn"]
+max_value = 100.0
+_data = [Vector2(0, 0.223557), 0.0, 0.0, 0, 0, Vector2(0.672727, 0), 0.0, 0.0, 0, 0, Vector2(0.778182, 100), 0.0, 0.0, 0, 0, Vector2(1, 100), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[node name="DeathParticles" type="CPUParticles2D"]
+emitting = false
+amount = 6
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+texture = ExtResource("1_voi34")
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 25.0
+initial_velocity_max = 50.0
+angular_velocity_min = 25.0
+angular_velocity_max = 50.0
+angular_velocity_curve = SubResource("Curve_qiapp")
+damping_max = 100.0
+damping_curve = SubResource("Curve_mgewn")
+scale_amount_min = 0.5
+scale_amount_curve = SubResource("Curve_qiapp")
+script = ExtResource("2_re2v6")
+
+[connection signal="finished" from="." to="." method="_on_finished"]

@@ -1,0 +1,10 @@
+[gd_resource type="Theme" load_steps=4 format=3 uid="uid://da85xqlgbylpq"]
+
+[ext_resource type="StyleBox" uid="uid://5j2omdk5b3qf" path="res://Layouts/audio_layouts/musicHover.tres" id="1_k273r"]
+[ext_resource type="StyleBox" uid="uid://cxemkxv82s6wa" path="res://Layouts/audio_layouts/musicOn.tres" id="2_frhbo"]
+[ext_resource type="StyleBox" uid="uid://cgp4cxvx06wbk" path="res://Layouts/audio_layouts/musicOff.tres" id="3_u0du5"]
+
+[resource]
+Button/styles/hover = ExtResource("1_k273r")
+Button/styles/normal = ExtResource("2_frhbo")
+Button/styles/pressed = ExtResource("3_u0du5")

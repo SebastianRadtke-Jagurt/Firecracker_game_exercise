@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=3 uid="uid://g5mskc21jujf"]
+
+[ext_resource type="Script" path="res://Scripts/OneTimeParticles.gd" id="2_s3moa"]
+
+[sub_resource type="Curve" id="Curve_qiapp"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.76, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Curve" id="Curve_mgewn"]
+max_value = 100.0
+_data = [Vector2(0, 0.223557), 0.0, 0.0, 0, 0, Vector2(0.672727, 0), 0.0, 0.0, 0, 0, Vector2(0.778182, 100), 0.0, 0.0, 0, 0, Vector2(1, 100), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="Gradient" id="Gradient_m8o13"]
+colors = PackedColorArray(1, 0.536225, 0.361593, 1, 0.869812, 0.296697, 0.136585, 1)
+
+[node name="DeflectBuffParticles" type="CPUParticles2D"]
+amount = 5
+lifetime = 0.5
+local_coords = true
+emission_shape = 1
+emission_sphere_radius = 3.0
+direction = Vector2(0, 1)
+spread = 15.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 40.0
+initial_velocity_max = 40.0
+angular_velocity_min = 25.0
+angular_velocity_max = 50.0
+angular_velocity_curve = SubResource("Curve_qiapp")
+damping_max = 100.0
+damping_curve = SubResource("Curve_mgewn")
+scale_amount_min = 2.0
+scale_amount_max = 2.0
+scale_amount_curve = SubResource("Curve_qiapp")
+color_ramp = SubResource("Gradient_m8o13")
+script = ExtResource("2_s3moa")
+
+[connection signal="finished" from="." to="." method="_on_finished"]

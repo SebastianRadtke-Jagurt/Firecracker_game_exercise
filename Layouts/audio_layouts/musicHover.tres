@@ -1,0 +1,7 @@
+[gd_resource type="StyleBoxTexture" load_steps=2 format=3 uid="uid://5j2omdk5b3qf"]
+
+[ext_resource type="Texture2D" uid="uid://cbitxvuiomuh7" path="res://Assets/Kenneys_Icons/musicOn.png" id="1_ke0s8"]
+
+[resource]
+texture = ExtResource("1_ke0s8")
+modulate_color = Color(0.6, 0.407843, 0.215686, 1)

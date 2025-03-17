@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3 uid="uid://c1a8uni4ff5c"]
+
+[ext_resource type="Script" path="res://Scripts/OneTimeParticles.gd" id="2_63cfn"]
+
+[sub_resource type="Curve" id="Curve_wicfc"]
+_data = [Vector2(0, 0.496274), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="DashRefreshParticles" type="CPUParticles2D"]
+emitting = false
+amount = 36
+one_shot = true
+explosiveness = 1.0
+local_coords = true
+emission_shape = 4
+emission_points = PackedVector2Array(25, 0, 17, 17, 0, 25, -17, 17, -25, 0, -17, -17, 0, -25, 17, -17)
+emission_colors = PackedColorArray()
+spread = 180.0
+gravity = Vector2(0, 0)
+angular_velocity_min = 25.0
+angular_velocity_max = 50.0
+radial_accel_min = -50.0
+radial_accel_max = -50.0
+scale_amount_min = 2.0
+scale_amount_max = 2.0
+scale_amount_curve = SubResource("Curve_wicfc")
+color = Color(1, 0.403922, 0.211765, 1)
+script = ExtResource("2_63cfn")
+
+[connection signal="finished" from="." to="." method="_on_finished"]

@@ -1,0 +1,8 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://mem868xmgxmd"]
+
+[ext_resource type="StyleBox" uid="uid://ddvqxnost05wn" path="res://Layouts/health/health_bar_parent.tres" id="1_in2ad"]
+[ext_resource type="StyleBox" uid="uid://ygt0maektodf" path="res://Layouts/health/health_bar.tres" id="2_woopu"]
+
+[resource]
+ProgressBar/styles/background = ExtResource("1_in2ad")
+ProgressBar/styles/fill = ExtResource("2_woopu")
