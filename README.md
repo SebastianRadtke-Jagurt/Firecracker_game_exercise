@@ -20,4 +20,16 @@ State pattern allowed me to write behaviors that are shareable between different
 
 With Command pattern I made custom inputs that work the same regardless if states receiving them are on the player character or AI driven NPC. This allowed me to share the same states between all characters without much trouble.
 
+In order to explain my implementation of State and Command patterns I will need to explain how my "characters" work.
 
+### What is a character?
+In context of my game a character is a script which stores data, initiates behaviors it is linked to (such as states and AI) and relays communication between said behaviors. Character is a base class from which child classes such as "Player" or "Enemy/Grunt" derive from. These child classes then register their own states and inputs individually.
+
+Yeah this is just basic object oriented programming.
+
+### When do states come into play?
+They are basically actions any character can perform such as moving, attacking etc.  
+State has a time during which it's executed and an array of transitions.  
+Transition is a state's helper class, it stores just 2 values; an input for activating the transition, and a name of a state to transition into.  
+
+When character instantiates it enters the starter state, then, during game's runtime, inputs are provided to the character, if the input is handled by the current state the current state is executed, otherwise if input is registered in the transition the current state is exited and next one is entered.
