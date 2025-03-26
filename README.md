@@ -18,5 +18,6 @@ Patterns I decided to prioritize are (unsurprisingly) [State](https://gameprogra
 
 State pattern allowed me to write behaviors that are shareable between different characters. For example I wrote moving state that reads input from its character and then transforms its position accordingly.
 
-With Command pattern I made custom inputs that work the same regardless if character receiving them is player character or AI driven NPC. This allowed me to share the same states between all characters without much trouble.
+With Command pattern I made custom inputs that work the same regardless if states receiving them are on the player character or AI driven NPC. This allowed me to share the same states between all characters without much trouble.
+
 
