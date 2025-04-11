@@ -2,6 +2,7 @@ extends CharacterBody2D
 class_name Actor
 
 var states : Dictionary
+var events : Dictionary
 var sounds : Dictionary
 
 signal on_get_hit(damage : int, stagger : int, knockback : int, attack_dir : Vector2, attacker : Actor)

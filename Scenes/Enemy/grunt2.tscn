@@ -6,14 +6,14 @@
 [ext_resource type="Script" path="res://Scripts/Hurtbox.gd" id="4_lwd5w"]
 [ext_resource type="Script" path="res://Scripts/States/StateIdle.gd" id="5_davx4"]
 [ext_resource type="Script" path="res://Scripts/States/StateStaggered.gd" id="6_tyroh"]
-[ext_resource type="Script" path="res://Scripts/States/StateTakeDamage.gd" id="7_l1vtg"]
-[ext_resource type="Script" path="res://Scripts/States/StateTakeKnockback.gd" id="8_tb60d"]
 [ext_resource type="Script" path="res://Scripts/States/StateMoving.gd" id="9_72yv3"]
 [ext_resource type="Script" path="res://Scripts/States/StateAttackSequence.gd" id="10_8u3ul"]
 [ext_resource type="Script" path="res://Scripts/States/Attack.gd" id="11_mo8xp"]
-[ext_resource type="Script" path="res://Scripts/States/StateTakeDeflect.gd" id="12_muw0y"]
+[ext_resource type="Script" path="res://Scripts/Events/EventTakeKnockback.gd" id="13_4xsuq"]
 [ext_resource type="Script" path="res://Scripts/AI_States/AI_Wandering.gd" id="13_5cwpf"]
+[ext_resource type="Script" path="res://Scripts/Events/EventTakeDamage.gd" id="14_bba1j"]
 [ext_resource type="Script" path="res://Scripts/AI_States/AI_Approach.gd" id="14_jcpvu"]
+[ext_resource type="Script" path="res://Scripts/Events/EventTakeDeflect.gd" id="15_04vln"]
 [ext_resource type="Script" path="res://Scripts/AI_States/AI_AttackingAtAngle.gd" id="15_mlhl7"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2631f"]
@@ -165,23 +165,6 @@ tracks/4/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
 "values": [0.0, 0.0, 3.0, 3.0]
-}
-tracks/5/type = "method"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("States/take_deflect")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0.3, 0.98),
-"transitions": PackedFloat32Array(1, 1),
-"values": [{
-"args": [true],
-"method": &"set__can_get_deflected"
-}, {
-"args": [false],
-"method": &"set__can_get_deflected"
-}]
 }
 
 [sub_resource type="Animation" id="Animation_s6ojg"]
@@ -349,13 +332,13 @@ _data = {
 collision_layer = 2
 script = ExtResource("1_xepsm")
 base_movement_speed = 0.7
+hitbox_layer = 2
+hurtbox_mask = 3
 anim_player = NodePath("AnimationPlayer")
 hurtbox = NodePath("weapon_root/weapon_offset/weapon_parent/hurtbox_Area2D")
 attack_audio_player = NodePath("AudioStreamPlayer2D")
 weapon_root = NodePath("weapon_root")
 weapon_offset = NodePath("weapon_root/weapon_offset")
-hitbox_layer = 2
-hurtbox_mask = 3
 current_state = NodePath("States/idle")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -402,12 +385,6 @@ script = ExtResource("5_davx4")
 script = ExtResource("6_tyroh")
 state_time_max = 0.5
 
-[node name="take_damage" type="Node" parent="States"]
-script = ExtResource("7_l1vtg")
-
-[node name="take_knockback" type="Node" parent="States"]
-script = ExtResource("8_tb60d")
-
 [node name="StateMoving" type="Node" parent="States"]
 script = ExtResource("9_72yv3")
 
@@ -417,11 +394,7 @@ script = ExtResource("10_8u3ul")
 [node name="1" type="Node" parent="States/StateAttackSequence"]
 script = ExtResource("11_mo8xp")
 animation_name = "attack_single_1"
-attack_time = 0.5
 next_attack_delay = 0.1
-
-[node name="take_deflect" type="Node" parent="States"]
-script = ExtResource("12_muw0y")
 
 [node name="AI_States" type="Node" parent="."]
 
@@ -435,6 +408,17 @@ script = ExtResource("14_jcpvu")
 [node name="Attacking" type="Node" parent="AI_States"]
 script = ExtResource("15_mlhl7")
 daring_to_attack_angle = 1
+
+[node name="Events" type="Node" parent="."]
+
+[node name="take_knockback" type="Node" parent="Events"]
+script = ExtResource("13_4xsuq")
+
+[node name="take_damage" type="Node" parent="Events"]
+script = ExtResource("14_bba1j")
+
+[node name="take_deflect" type="Node" parent="Events"]
+script = ExtResource("15_04vln")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 

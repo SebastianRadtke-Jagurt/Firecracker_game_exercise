@@ -1,4 +1,5 @@
 extends Event
+class_name EventTakeDamage
 
 func init(_actor : Actor):
 	super.init(_actor)

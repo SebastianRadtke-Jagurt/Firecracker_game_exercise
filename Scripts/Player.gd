@@ -10,15 +10,18 @@ func _ready():
 	game.set_health_bar_max(base_health)
 	on_after_get_hit.connect(update_health_bar)
 	on_death.connect(game.on_lose)
-	
+	events = {
+		"take_damage" : $Events/take_damage as EventTakeDamage,
+		"take_knockback" : $Events/take_knockback as EventTakeKnockback,
+	}
+	for event in events:
+		events[event].init(self)
 	states = {
 		"idle" : $States/idle as StateIdle,
 		"moving" : $States/moving as StateMoving,
 		"dashing" : $States/dashing as StateDashing,
 		"staggered" : $States/staggered as StateStaggered,
 		"attack_1" : $States/attack_seq_1 as StateAttackSequence,
-		"take_damage" : $States/take_damage as StateTakeDamage,
-		"take_knockback" : $States/take_knockback as StateTakeKnockback,
 	}
 	for state in states:
 		states[state].init(self)

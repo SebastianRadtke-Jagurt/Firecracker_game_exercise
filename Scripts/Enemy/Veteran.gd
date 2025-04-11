@@ -2,14 +2,18 @@ extends Enemy
 
 func _ready():
 	init()
+	events = {
+		"take_damage" : $Events/take_damage as EventTakeDamage,
+		"take_knockback" : $Events/take_knockback as EventTakeKnockback,
+		"take_deflect" : $Events/take_deflect as EventTakeDeflect,
+	}
+	for event in events:
+		events[event].init(self)
 	states = {
 		"idle" : $States/idle as StateIdle,
 		"moving" : $States/StateMoving as StateMoving,
 		"attack_1" : $States/StateAttackSequence as StateAttackSequence,
 		"staggered" : $States/staggered as StateStaggered,
-		"take_damage" : $States/take_damage as StateTakeDamage,
-		"take_knockback" : $States/take_knockback as StateTakeKnockback,
-		"take_deflect" : $States/take_deflect as State,
 	}
 	for state in states:
 		states[state].init(self)

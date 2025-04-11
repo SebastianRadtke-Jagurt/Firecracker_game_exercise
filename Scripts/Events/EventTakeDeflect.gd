@@ -21,3 +21,4 @@ func on_get_hit(_damage, _stagger, _knockback, _attack_dir, _attacker):
 	can_get_deflected = false
 
 func set__can_get_deflected(can : bool):
+	can_get_deflected = can
