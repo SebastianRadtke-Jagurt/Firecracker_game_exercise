@@ -5,6 +5,7 @@ var states : Dictionary
 var sounds : Dictionary
 
 signal on_get_hit(damage : int, stagger : int, knockback : int, attack_dir : Vector2, attacker : Actor)
+signal on_after_get_hit(damage : int)
 signal on_death
 signal on_hit(attacked : Actor)
 signal on_sword_clash(clashed_actor: Actor)
@@ -119,7 +120,7 @@ func enable_hurtbox(is_enabled : bool):
 	if hurtbox == null:
 		return
 	
-	hurtbox.enable_hurtbox(is_enabled, hurtbox_mask, buffered_attack, Vector2.RIGHT.rotated(global_rotation))
+	hurtbox.enable_hurtbox(is_enabled, hurtbox_mask, buffered_attack, get_attack_rotation())
 
 func get_input(_input : String) -> bool:
 	return false
@@ -135,6 +136,7 @@ func get_hit(damage : int, stagger : int, knockback : int, attack_dir : Vector2,
 	if attacker != null: attacker.on_hit.emit(self)
 	
 	on_get_hit.emit(damage, stagger, knockback, attack_dir, attacker)
+	on_after_get_hit.emit(damage)
 	
 	if base_health <= 0:
 		die()
@@ -150,12 +152,6 @@ func reposition_weapon(delta):
 func die():
 	on_death.emit()
 	var dp = GameManager.death_particles.instantiate()
-	get_tree().root.add_child(dp)
+	GameManager.game_parent.add_child(dp)
 	dp.init(global_position)
 	queue_free()
-
-#var active_buffs : Array[Buff]
-#func add_active_buff(new_buff):
-	#active_buffs.append(new_buff)
-#func remove_active_buff(removed_buff):
-	#active_buffs.erase(removed_buff)

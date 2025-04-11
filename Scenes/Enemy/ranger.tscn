@@ -229,7 +229,7 @@ _data = {
 [node name="Ranger" type="CharacterBody2D" node_paths=PackedStringArray("anim_player", "attack_audio_player", "weapon_root", "weapon_offset", "current_state")]
 collision_layer = 2
 script = ExtResource("1_24xf5")
-approach_distance_min = 150
+approach_distance_min = 75
 approach_distance_max = 600
 base_movement_speed = 0.5
 anim_player = NodePath("AnimationPlayer")
@@ -288,13 +288,13 @@ script = ExtResource("9_d4eih")
 [node name="StateAttackSequence" type="Node" parent="States"]
 script = ExtResource("10_t6nps")
 
-[node name="1" type="Node" parent="States/StateAttackSequence"]
+[node name="1" type="Node" parent="States/StateAttackSequence" node_paths=PackedStringArray("anim_player")]
 script = ExtResource("11_nneq4")
+anim_player = NodePath("../../../AnimationPlayer")
 animation_name = "attack_single_1"
 damage = 2
 stagger = 2
 knockback = 2
-attack_time = 0.5
 next_attack_delay = 1.0
 displacement = 1.0
 

@@ -1373,10 +1373,12 @@ terrain_set_0/terrain_1/color = Color(0.811765, 0.509804, 0.329412, 1)
 sources/0 = SubResource("TileSetAtlasSource_iulxs")
 sources/1 = SubResource("TileSetAtlasSource_iiu3p")
 
-[node name="GameScene" type="Node2D" node_paths=PackedStringArray("game_parent", "health_bar")]
+[node name="GameScene" type="Node2D" node_paths=PackedStringArray("game_parent", "health_bar", "dead_screen", "win_screen")]
 script = ExtResource("1_3ntji")
 game_parent = NodePath("GameParent")
 health_bar = NodePath("Control/Panel/HealthBar")
+dead_screen = NodePath("Control/Dead_Screen")
+win_screen = NodePath("Control/Win_Screen")
 
 [node name="TileMap-floor" type="TileMap" parent="."]
 position = Vector2(0, 32)
@@ -1401,9 +1403,10 @@ position = Vector2(340, 167)
 cam = NodePath("../../Camera2D")
 game = NodePath("../..")
 
-[node name="WaveSpawner" type="Node2D" parent="GameParent" node_paths=PackedStringArray("waves")]
+[node name="WaveSpawner" type="Node2D" parent="GameParent" node_paths=PackedStringArray("waves", "game")]
 script = ExtResource("5_2f0ep")
 waves = [NodePath("Wave1"), NodePath("Wave2"), NodePath("Wave3"), NodePath("Wave4"), NodePath("Wave5"), NodePath("Wave6"), NodePath("Wave7")]
+game = NodePath("../..")
 
 [node name="Wave1" type="Node2D" parent="GameParent/WaveSpawner" node_paths=PackedStringArray("spawners")]
 script = ExtResource("6_ayu0a")
@@ -1843,6 +1846,144 @@ layout_mode = 2
 theme = ExtResource("11_bc0xl")
 text = "Exit"
 
+[node name="Dead_Screen" type="Panel" parent="Control"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.315476
+anchor_top = 0.159936
+anchor_right = 0.6875
+anchor_bottom = 0.787777
+offset_left = -212.0
+offset_top = -46.5952
+offset_right = -212.0
+offset_bottom = 3.40466
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+theme = ExtResource("11_bc0xl")
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Control/Dead_Screen"]
+layout_mode = 2
+offset_left = 70.0
+offset_top = 38.0
+offset_right = 430.0
+offset_bottom = 214.0
+size_flags_vertical = 0
+theme = ExtResource("11_bc0xl")
+theme_override_colors/font_color = Color(0.364706, 0.25098, 0.129412, 1)
+theme_override_font_sizes/font_size = 64
+text = "You are
+dead"
+horizontal_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/Dead_Screen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 50.0
+offset_top = 222.0
+offset_right = -50.0
+offset_bottom = -62.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/Dead_Screen/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="Control/Dead_Screen/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Restart" type="Button" parent="Control/Dead_Screen/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("11_bc0xl")
+text = "Restart"
+
+[node name="Exit" type="Button" parent="Control/Dead_Screen/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("11_bc0xl")
+text = "Exit"
+
+[node name="HSeparator2" type="HSeparator" parent="Control/Dead_Screen/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Win_Screen" type="Panel" parent="Control"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.315476
+anchor_top = 0.226698
+anchor_right = 0.6875
+anchor_bottom = 0.647152
+offset_left = -212.0
+offset_top = -46.5952
+offset_right = -212.0
+offset_bottom = 3.40466
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+theme = ExtResource("11_bc0xl")
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Control/Win_Screen"]
+layout_mode = 2
+offset_left = 70.0
+offset_top = 36.0
+offset_right = 430.0
+offset_bottom = 130.0
+size_flags_vertical = 0
+theme = ExtResource("11_bc0xl")
+theme_override_colors/font_color = Color(0.364706, 0.25098, 0.129412, 1)
+theme_override_font_sizes/font_size = 64
+text = "You Win!"
+horizontal_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/Win_Screen"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 50.0
+offset_top = -218.0
+offset_right = -50.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/Win_Screen/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="Control/Win_Screen/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Restart" type="Button" parent="Control/Win_Screen/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("11_bc0xl")
+text = "Restart"
+
+[node name="Exit" type="Button" parent="Control/Win_Screen/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("11_bc0xl")
+text = "Exit"
+
+[node name="HSeparator2" type="HSeparator" parent="Control/Win_Screen/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
 [node name="Panel" type="Panel" parent="Control"]
 layout_mode = 1
 anchors_preset = 10
@@ -1861,12 +2002,13 @@ step = 1.0
 value = 100.0
 show_percentage = false
 
-[node name="MenuButton" type="Button" parent="Control"]
+[node name="MenuButton" type="Button" parent="Control/Panel"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -75.0
+offset_left = 261.0
+offset_right = 336.0
 offset_bottom = 32.0
 grow_horizontal = 2
 theme = ExtResource("11_bc0xl")
@@ -1882,4 +2024,8 @@ text = "MENU"
 [connection signal="toggled" from="Control/Menu/MarginContainer/VBoxContainer/Music/music_Button" to="Control/VolumeSettings" method="_on_music_button_toggled"]
 [connection signal="pressed" from="Control/Menu/MarginContainer/VBoxContainer/Restart" to="Control" method="_on_restart_pressed"]
 [connection signal="pressed" from="Control/Menu/MarginContainer/VBoxContainer/Exit" to="Control" method="_on_exit_pressed"]
-[connection signal="pressed" from="Control/MenuButton" to="Control" method="_on_menu_button_pressed"]
+[connection signal="pressed" from="Control/Dead_Screen/MarginContainer/VBoxContainer/Restart" to="Control" method="_on_restart_pressed"]
+[connection signal="pressed" from="Control/Dead_Screen/MarginContainer/VBoxContainer/Exit" to="Control" method="_on_exit_pressed"]
+[connection signal="pressed" from="Control/Win_Screen/MarginContainer/VBoxContainer/Restart" to="Control" method="_on_restart_pressed"]
+[connection signal="pressed" from="Control/Win_Screen/MarginContainer/VBoxContainer/Exit" to="Control" method="_on_exit_pressed"]
+[connection signal="pressed" from="Control/Panel/MenuButton" to="Control" method="_on_menu_button_pressed"]

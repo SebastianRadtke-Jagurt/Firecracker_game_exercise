@@ -1,4 +1,4 @@
-[gd_resource type="AnimationLibrary" load_steps=8 format=3 uid="uid://c5n8vec23cjrw"]
+[gd_resource type="AnimationLibrary" load_steps=9 format=3 uid="uid://c5n8vec23cjrw"]
 
 [sub_resource type="Animation" id="Animation_0na2m"]
 length = 0.001
@@ -75,6 +75,18 @@ tracks/5/keys = {
 "args": [],
 "method": &"expire"
 }]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("CollisionShape2D/sprite_offset/Sprite2D:scale")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_s1yo0"]
@@ -267,6 +279,23 @@ tracks/4/keys = {
 }]
 }
 
+[sub_resource type="Animation" id="Animation_4sq5t"]
+resource_name = "dashing"
+length = 0.3
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape2D/sprite_offset/Sprite2D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.08, 0.22, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1, 0.7), Vector2(1, 0.7), Vector2(1, 1)]
+}
+
 [sub_resource type="Animation" id="Animation_n4tr0"]
 resource_name = "idle"
 length = 0.75
@@ -377,6 +406,7 @@ _data = {
 "attack_single_1": SubResource("Animation_s1yo0"),
 "attack_single_2": SubResource("Animation_s6ojg"),
 "attack_single_3": SubResource("Animation_uynr2"),
+"dashing": SubResource("Animation_4sq5t"),
 "idle": SubResource("Animation_n4tr0"),
 "moving": SubResource("Animation_oec8n"),
 "staggered": SubResource("Animation_vp3k3")

@@ -13,7 +13,7 @@ var attack_dir : Vector2
 
 func _ready():
 	for child in get_children():
-		attacks.append(child as Attack)
+		if child is Attack: attacks.append(child as Attack)
 
 func _physics_process(delta):
 	sequence_fall_out(delta)

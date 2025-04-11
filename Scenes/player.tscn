@@ -98,33 +98,33 @@ script = ExtResource("11_6g0cf")
 [node name="attack_seq_1" type="Node" parent="States"]
 script = ExtResource("7_lmfvp")
 
-[node name="1" type="Node" parent="States/attack_seq_1"]
+[node name="1" type="Node" parent="States/attack_seq_1" node_paths=PackedStringArray("anim_player")]
 script = ExtResource("8_l526k")
+anim_player = NodePath("../../../AnimationPlayer")
 animation_name = "attack_single_1"
 damage = 2
 stagger = 2
 knockback = 5
-attack_time = 0.2
 next_attack_delay = 0.1
 displacement = 3.0
 
-[node name="2" type="Node" parent="States/attack_seq_1"]
+[node name="2" type="Node" parent="States/attack_seq_1" node_paths=PackedStringArray("anim_player")]
 script = ExtResource("8_l526k")
+anim_player = NodePath("../../../AnimationPlayer")
 animation_name = "attack_single_2"
 damage = 2
 stagger = 2
 knockback = 5
-attack_time = 0.2
 next_attack_delay = 0.1
 displacement = 3.0
 
-[node name="3" type="Node" parent="States/attack_seq_1"]
+[node name="3" type="Node" parent="States/attack_seq_1" node_paths=PackedStringArray("anim_player")]
 script = ExtResource("8_l526k")
+anim_player = NodePath("../../../AnimationPlayer")
 animation_name = "attack_single_3"
 damage = 4
 stagger = 4
 knockback = 5
-attack_time = 0.3
 next_attack_delay = 0.2
 
 [node name="AttackSoundPlayer" type="AudioStreamPlayer2D" parent="."]

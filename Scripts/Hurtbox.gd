@@ -19,7 +19,7 @@ func enable_hurtbox(is_enabled, _collision_mask, attack : Attack, _attack_dir : 
 		_attack_damage = attack.damage
 		_attack_stagger = attack.stagger
 		_attack_knockback = attack.knockback
-		self.attack_dir = _attack_dir
+		attack_dir = _attack_dir
 
 func _on_body_entered(body):
 	if body is Actor:

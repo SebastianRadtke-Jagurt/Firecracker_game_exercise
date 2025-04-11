@@ -7,6 +7,8 @@ var next_scene : Node
 
 @export var game_parent : Node2D
 @export var health_bar : ProgressBar
+@export var dead_screen : Control
+@export var win_screen : Control
 
 func _ready():
 	GameManager.game_parent = game_parent
@@ -38,3 +40,11 @@ func set_health_bar(value : int):
 
 func pause(is_paused : bool):
 	game_parent.get_tree().paused = is_paused
+
+func on_lose():
+	pause(true)
+	dead_screen.visible = true
+
+func on_win():
+	pause(true)
+	win_screen.visible = true

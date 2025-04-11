@@ -8,7 +8,9 @@ var mouse_pos : Vector2 = Vector2.ZERO
 func _ready():
 	init()
 	game.set_health_bar_max(base_health)
-	on_get_hit.connect(update_health_bar)
+	on_after_get_hit.connect(update_health_bar)
+	on_death.connect(game.on_lose)
+	
 	states = {
 		"idle" : $States/idle as StateIdle,
 		"moving" : $States/moving as StateMoving,
@@ -27,13 +29,13 @@ func _ready():
 func setup_states():
 	states["idle"].register_transition("ui_accept", "dashing")
 	states["idle"].register_transition("attack_1", "attack_1")
-	states["idle"].register_transition("attack_2", "attack_2")
+	#states["idle"].register_transition("attack_2", "attack_2")
 	states["moving"].register_transition("ui_accept", "dashing")
 	states["moving"].register_transition("attack_1", "attack_1")
-	states["moving"].register_transition("attack_2", "attack_2")
+	#states["moving"].register_transition("attack_2", "attack_2")
 	states["dashing"].register_transition("ui_accept", "dashing")
 	states["dashing"].register_transition("attack_1", "attack_1")
-	states["dashing"].register_transition("attack_2", "attack_2")
+	#states["dashing"].register_transition("attack_2", "attack_2")
 	states["attack_1"].register_transition("ui_accept", "dashing")
 
 func _physics_process(delta):
@@ -58,6 +60,5 @@ func restore_default_state():
 	current_state = states["idle"]
 	current_state.enter()
 
-func update_health_bar(_damage : int, _stagger : int, _knockback : int, _attack_dir : Vector2, _attacker : Actor):
-	await get_tree().process_frame
+func update_health_bar(_damage : int):
 	game.set_health_bar(base_health)
