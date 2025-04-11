@@ -23,7 +23,7 @@ With Command pattern I made custom inputs that work the same regardless if state
 In order to explain my implementation of State and Command patterns I will need to explain how my "characters" work.
 
 ### What is a character?
-In context of my game a character is a script which stores data, initiates behaviors it is linked to (such as states and AI) and relays communication between said behaviors. Character is a base class from which child classes such as "Player" or "Enemy/Grunt" derive from. These child classes then register their own states and inputs individually.
+In context of my game a character is a script which stores data, initiates behaviors it is linked to (such as states and AI) and relays communication between said behaviors. Character is a base class from which child classes such as "Player" or "Enemy/Grunt" inherit from. These child classes then register their own states and inputs individually.
 
 Yeah this is just basic object oriented programming.
 
