@@ -23,13 +23,12 @@ With Command pattern I made custom inputs that work the same regardless if state
 In order to explain my implementation of State and Command patterns I will need to explain how my "characters" work.
 
 ### What is a character?
-In context of my game a character is a script which stores data, initiates behaviors it is linked to (such as states and AI) and relays communication between said behaviors. Character is a base class from which child classes such as "Player" or "Enemy/Grunt" derive from. These child classes then register their own states and inputs individually.
+In context of my game a character is a script which stores data, initiates behaviors it is linked to (such as states and AI) and relays communication between said behaviors. Character is a base class from which child classes such as "Player" or "Enemy/Grunt" inherit from. These child classes then register their own states and inputs individually.
 
-Yeah this is just basic object oriented programming.
-
-### When do states come into play?
+### So what are states and when they come into play?
 They are basically actions any character can perform such as moving, attacking etc.  
-State has a time during which it's executed and an array of transitions.  
-Transition is a state's helper class, it stores just 2 values; an input for activating the transition, and a name of a state to transition into.  
+States have general and unique set of behaviors which are executed when character enters them, during the time of persisting in them and when character exits them as well as an array of possible transitions to different states that are triggered by character's inputs.  
 
-When character instantiates it enters the starter state, then, during game's runtime, inputs are provided to the character, if the input is handled by the current state the current state is executed, otherwise if input is registered in the transition the current state is exited and next one is entered.
+Simplest example would be "Moving" state. When entering the state as a result of a character input, the character starts playing a moving animation. When state persists it reads character's movement input and modifies character's movement vector accordingly. Otherwise when the state doesn't read any movement input, it exits itself and the character enters an idle state instead.
+
+This provides more clean and organized control over characters through transitions while also maintaining great flexibility of behaviors.
