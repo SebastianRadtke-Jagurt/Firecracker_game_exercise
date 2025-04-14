@@ -15,11 +15,11 @@ func _ready():
 	actor.on_sword_clash.connect(check_deflect)
 
 func check_deflect(attacked : Actor):
-	if attacked.states.has("take_deflect") && attacked.states["take_deflect"].check_deflect():
-		var slash = GameManager.slash.instantiate()
-		get_tree().root.add_child(slash)
+	if attacked.events.has("take_deflect") && attacked.events["take_deflect"].check_deflect():
+		var slash_vfx = GameManager.slash_vfx.instantiate()
+		get_tree().root.add_child(slash_vfx)
 		var dir =  actor.global_position.direction_to(attacked.global_position)
-		slash.init(actor.global_position + dir * 36)
+		slash_vfx.init(actor.global_position + dir * 36)
 		apply()
 
 func apply():
@@ -31,7 +31,6 @@ func apply():
 	if buffs_applied.size() >= buff_count_max:
 		buffs_applied.front().expire()
 		buffs_applied.append(new_buff)
-	
 
 func expire(buff : DeflectBuff):
 	buffs_applied.erase(buff)

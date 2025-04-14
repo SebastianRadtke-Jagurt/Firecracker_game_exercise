@@ -10,7 +10,7 @@ var game_parent : Node2D
 @onready var elite = load("res://Scenes/Enemy/elite.tscn")
 
 @onready var death_particles = load("res://Scenes/death_particles.tscn")
-@onready var slash = load("res://Scenes/slash_particle.tscn")
+@onready var slash_vfx = load("res://Scenes/slash_particle.tscn")
 @onready var deflect_buff_particles = load("res://Scenes/deflect_buff_particles.tscn")
 @onready var dash_refresh_particles = load("res://Scenes/dash_refresh_particles.tscn")
 
