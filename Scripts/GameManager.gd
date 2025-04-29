@@ -17,7 +17,7 @@ var game_parent : Node2D
 enum Spawnable {ARROW, GRUNT, RANGER, VETERAN, ELITE}
 
 var player_position : Vector2 = Vector2.ZERO
-var player_rotation : float = 0
+var player_weapon_rotation : float = 0
 
 @onready var spawnables = {
 	"ARROW" : arrow,

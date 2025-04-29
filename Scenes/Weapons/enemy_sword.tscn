@@ -1,0 +1,173 @@
+[gd_scene load_steps=10 format=3 uid="uid://bul12e5w8nvfk"]
+
+[ext_resource type="Script" path="res://Scripts/Weapons/Sword.gd" id="1_af2bw"]
+[ext_resource type="Texture2D" uid="uid://o6tdeo2pshaq" path="res://Assets/Kenney_Tiny_Dungeon/Tiles/tile_0104.png" id="2_hfbpo"]
+[ext_resource type="Script" path="res://Scripts/Hurtbox.gd" id="3_knu0w"]
+[ext_resource type="Script" path="res://Scripts/Weapons/WeaponAttackSequence.gd" id="4_5gsos"]
+[ext_resource type="Script" path="res://Scripts/States/Attack.gd" id="5_6ihhk"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xhn5g"]
+radius = 12.055
+
+[sub_resource type="Animation" id="Animation_stusc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("sword_offset:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("sword_offset:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [false],
+"method": &"set_active_hurtbox"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_wmed3"]
+resource_name = "attack_single_1"
+length = 0.7
+step = 0.02
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.5, 0.68),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [true],
+"method": &"set_active_hurtbox"
+}, {
+"args": [false],
+"method": &"set_active_hurtbox"
+}]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["swing"],
+"method": &"play_sound"
+}]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("state_attack_sequence/1:displacement")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0, 3.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("sword_offset:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.5, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(2, 4), Vector2(0, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("sword_offset:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.5, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 0.785398, -0.785398]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tg6v4"]
+_data = {
+"RESET": SubResource("Animation_stusc"),
+"attack_single_1": SubResource("Animation_wmed3")
+}
+
+[node name="enemy_sword_root" type="Node2D" node_paths=PackedStringArray("offset", "hurtbox", "anim_player", "attack_sequences")]
+script = ExtResource("1_af2bw")
+offset = NodePath("sword_offset")
+hurtbox = NodePath("sword_offset/sword_parent/hurtbox_Area2D")
+anim_player = NodePath("AnimationPlayer")
+attack_sequences = [NodePath("state_attack_sequence")]
+
+[node name="sword_offset" type="Node2D" parent="."]
+
+[node name="sword_parent" type="Node2D" parent="sword_offset"]
+position = Vector2(0, 20)
+
+[node name="Sprite2D" type="Sprite2D" parent="sword_offset/sword_parent"]
+rotation = 3.14159
+texture = ExtResource("2_hfbpo")
+
+[node name="hurtbox_Area2D" type="Area2D" parent="sword_offset/sword_parent"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("3_knu0w")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="sword_offset/sword_parent/hurtbox_Area2D"]
+shape = SubResource("CircleShape2D_xhn5g")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_tg6v4")
+}
+
+[node name="state_attack_sequence" type="Node" parent="." node_paths=PackedStringArray("weapon")]
+script = ExtResource("4_5gsos")
+weapon = NodePath("..")
+
+[node name="1" type="Node" parent="state_attack_sequence" node_paths=PackedStringArray("anim_player")]
+script = ExtResource("5_6ihhk")
+anim_player = NodePath("../../AnimationPlayer")
+animation_name = "attack_single_1"
+damage = 2
+stagger = 2
+knockback = 5
+next_attack_delay = 0.1
+
+[connection signal="body_entered" from="sword_offset/sword_parent/hurtbox_Area2D" to="sword_offset/sword_parent/hurtbox_Area2D" method="_on_body_entered"]

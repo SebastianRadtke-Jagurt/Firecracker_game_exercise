@@ -1,16 +1,18 @@
-[gd_scene load_steps=19 format=3 uid="uid://b0hx5nkucpnjs"]
+[gd_scene load_steps=27 format=3 uid="uid://b0hx5nkucpnjs"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_4r356"]
 [ext_resource type="Texture2D" uid="uid://ogixvk0fa3d" path="res://Assets/Kenney_Tiny_Dungeon/Tiles/tile_0085.png" id="1_5g541"]
 [ext_resource type="Script" path="res://Scripts/States/StateIdle.gd" id="2_p7yon"]
-[ext_resource type="AnimationLibrary" uid="uid://c5n8vec23cjrw" path="res://Scenes/player_anim_lib.tres" id="3_jndd0"]
 [ext_resource type="Script" path="res://Scripts/Hurtbox.gd" id="4_7eghw"]
 [ext_resource type="Script" path="res://Scripts/States/StateMoving.gd" id="4_wq3en"]
+[ext_resource type="Script" path="res://Scripts/Weapons/Weapons.gd" id="5_2qvo4"]
 [ext_resource type="Script" path="res://Scripts/States/StateDashing.gd" id="5_ksbjp"]
+[ext_resource type="PackedScene" uid="uid://c4f6fajwpkk1t" path="res://Scenes/Weapons/sword.tscn" id="6_5f2td"]
 [ext_resource type="Script" path="res://Scripts/States/StateStaggered.gd" id="6_6bp4v"]
-[ext_resource type="Script" path="res://Scripts/States/StateAttackSequence.gd" id="7_lmfvp"]
-[ext_resource type="Script" path="res://Scripts/States/Attack.gd" id="8_l526k"]
+[ext_resource type="Script" path="res://Scripts/States/StateWeaponAttack.gd" id="7_lmfvp"]
+[ext_resource type="Script" path="res://Scripts/States/StateGroup.gd" id="7_ngvgy"]
 [ext_resource type="Texture2D" uid="uid://o6tdeo2pshaq" path="res://Assets/Kenney_Tiny_Dungeon/Tiles/tile_0104.png" id="9_aesfj"]
+[ext_resource type="Script" path="res://Scripts/States/SwapWeapon.gd" id="12_p28k2"]
 [ext_resource type="AudioStream" uid="uid://cfaamtw61do72" path="res://Assets/Kenney_Audio/kenney_impact-sounds/Audio/impactMining_002.ogg" id="14_13xwg"]
 [ext_resource type="Script" path="res://Scripts/Events/EventTakeKnockback.gd" id="14_cq3sd"]
 [ext_resource type="Script" path="res://Scripts/DeflectBuff.gd" id="14_rxg5q"]
@@ -23,19 +25,150 @@ radius = 8.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_xhn5g"]
 radius = 12.055
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("anim_player", "hurtbox", "attack_audio_player", "weapon_root", "weapon_offset", "current_state")]
+[sub_resource type="Animation" id="Animation_0na2m"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollisionShape2D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_4sq5t"]
+resource_name = "dashing"
+length = 0.3
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape2D/sprite_offset/Sprite2D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.08, 0.22, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1, 0.7), Vector2(1, 0.7), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_n4tr0"]
+resource_name = "idle"
+length = 0.75
+loop_mode = 1
+step = 0.025
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -1), Vector2(0, 0), Vector2(0, -1), Vector2(0, 0), Vector2(0, -1), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_oec8n"]
+resource_name = "moving"
+length = 0.5
+loop_mode = 1
+step = 0.025
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -1), Vector2(0, 0), Vector2(0, -2), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollisionShape2D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.261799, -0.261799, 0.261799]
+}
+
+[sub_resource type="Animation" id="Animation_vp3k3"]
+resource_name = "staggered"
+length = 0.2
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 1.57079, 3.14159, 4.71238, 6.28318]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["player_hurt"],
+"method": &"play_sound"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_theb8"]
+_data = {
+"RESET": SubResource("Animation_0na2m"),
+"dashing": SubResource("Animation_4sq5t"),
+"idle": SubResource("Animation_n4tr0"),
+"moving": SubResource("Animation_oec8n"),
+"staggered": SubResource("Animation_vp3k3")
+}
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("state_groups", "anim_player", "attack_audio_player", "weapons", "current_state")]
 collision_layer = 4
 script = ExtResource("1_4r356")
-base_health = 20
+state_groups = [NodePath("States"), NodePath("States2")]
+base_health = 100
 anim_player = NodePath("AnimationPlayer")
-hurtbox = NodePath("sword_root/sword_offset/sword_parent/hurtbox_Area2D")
 attack_audio_player = NodePath("AttackSoundPlayer")
-weapon_root = NodePath("sword_root")
-weapon_offset = NodePath("sword_root/sword_offset")
+weapons = NodePath("Weapons")
 hitbox_layer = 3
 hurtbox_mask = 2
 current_state = NodePath("States/idle")
-get_hit_cooldown_max = 0.4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_kn6of")
@@ -48,12 +181,8 @@ texture_filter = 1
 texture_repeat = 1
 texture = ExtResource("1_5g541")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": ExtResource("3_jndd0")
-}
-
 [node name="sword_root" type="Node2D" parent="."]
+visible = false
 
 [node name="sword_offset" type="Node2D" parent="sword_root"]
 
@@ -72,7 +201,22 @@ script = ExtResource("4_7eghw")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="sword_root/sword_offset/sword_parent/hurtbox_Area2D"]
 shape = SubResource("CircleShape2D_xhn5g")
 
-[node name="States" type="Node" parent="."]
+[node name="Weapons" type="Node2D" parent="." node_paths=PackedStringArray("actor", "current_weapon", "weapons")]
+script = ExtResource("5_2qvo4")
+actor = NodePath("..")
+current_weapon = NodePath("sword")
+weapons = [NodePath("sword")]
+
+[node name="sword" parent="Weapons" instance=ExtResource("6_5f2td")]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_theb8")
+}
+
+[node name="States" type="Node" parent="." node_paths=PackedStringArray("current_state")]
+script = ExtResource("7_ngvgy")
+current_state = NodePath("idle")
 
 [node name="idle" type="Node" parent="States"]
 script = ExtResource("2_p7yon")
@@ -89,37 +233,19 @@ state_time_max = 0.3
 script = ExtResource("6_6bp4v")
 state_time_max = 0.2
 
-[node name="attack_seq_1" type="Node" parent="States"]
+[node name="weapon_attack" type="Node" parent="States"]
 script = ExtResource("7_lmfvp")
 
-[node name="1" type="Node" parent="States/attack_seq_1" node_paths=PackedStringArray("anim_player")]
-script = ExtResource("8_l526k")
-anim_player = NodePath("../../../AnimationPlayer")
-animation_name = "attack_single_1"
-damage = 2
-stagger = 2
-knockback = 5
-next_attack_delay = 0.1
-displacement = 3.0
+[node name="swap_weapon_ultimate" type="Node" parent="States"]
 
-[node name="2" type="Node" parent="States/attack_seq_1" node_paths=PackedStringArray("anim_player")]
-script = ExtResource("8_l526k")
-anim_player = NodePath("../../../AnimationPlayer")
-animation_name = "attack_single_2"
-damage = 2
-stagger = 2
-knockback = 5
-next_attack_delay = 0.1
-displacement = 3.0
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="."]
 
-[node name="3" type="Node" parent="States/attack_seq_1" node_paths=PackedStringArray("anim_player")]
-script = ExtResource("8_l526k")
-anim_player = NodePath("../../../AnimationPlayer")
-animation_name = "attack_single_3"
-damage = 4
-stagger = 4
-knockback = 5
-next_attack_delay = 0.2
+[node name="States2" type="Node" parent="."]
+script = ExtResource("7_ngvgy")
+
+[node name="swap_weapon" type="Node" parent="States2"]
+script = ExtResource("12_p28k2")
+state_time_max = 0.4
 
 [node name="Events" type="Node" parent="."]
 
@@ -152,3 +278,5 @@ movement_speed = 0.2
 attack_damage = 2
 
 [connection signal="body_entered" from="sword_root/sword_offset/sword_parent/hurtbox_Area2D" to="sword_root/sword_offset/sword_parent/hurtbox_Area2D" method="_on_body_entered"]
+
+[editable path="Weapons/sword"]

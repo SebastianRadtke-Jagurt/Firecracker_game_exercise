@@ -17,7 +17,7 @@ func enter():
 
 func execute(delta):
 	state_time += delta
-	actor.aim_weapon(delta, GameManager.player_position, 3)
+	actor.weapons.current_weapon.aim_weapon(delta, GameManager.player_position, 3)
 	var dir = actor.global_position.direction_to(destination)
 	actor.movement_input = dir * actor.movement_speed
 	if actor.global_position.distance_to(destination) <= 1 \

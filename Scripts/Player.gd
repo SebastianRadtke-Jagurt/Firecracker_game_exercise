@@ -6,7 +6,6 @@ var mouse_pos : Vector2 = Vector2.ZERO
 @export var game : Game
 
 func _ready():
-	init()
 	game.set_health_bar_max(base_health)
 	on_after_get_hit.connect(update_health_bar)
 	on_death.connect(game.on_lose)
@@ -16,37 +15,38 @@ func _ready():
 	}
 	for event in events:
 		events[event].init(self)
-	states = {
+	state_groups[0].states = {
 		"idle" : $States/idle as StateIdle,
 		"moving" : $States/moving as StateMoving,
 		"dashing" : $States/dashing as StateDashing,
 		"staggered" : $States/staggered as StateStaggered,
-		"attack_1" : $States/attack_seq_1 as StateAttackSequence,
+		"attack_1" : $States/weapon_attack as StateWeaponAttack,
 	}
-	for state in states:
-		states[state].init(self)
+	state_groups[1].states = {
+		"swap_weapon" : $States2/swap_weapon as StateSwapWeapon
+	}
+	for state_group in state_groups:
+		state_group.init(self)
+		
 	setup_states()
 	restore_default_state()
 	current_state.enter()
 
 func setup_states():
-	states["idle"].register_transition("ui_accept", "dashing")
-	states["idle"].register_transition("attack_1", "attack_1")
-	#states["idle"].register_transition("attack_2", "attack_2")
-	states["moving"].register_transition("ui_accept", "dashing")
-	states["moving"].register_transition("attack_1", "attack_1")
-	#states["moving"].register_transition("attack_2", "attack_2")
-	states["dashing"].register_transition("ui_accept", "dashing")
-	states["dashing"].register_transition("attack_1", "attack_1")
-	#states["dashing"].register_transition("attack_2", "attack_2")
-	states["attack_1"].register_transition("ui_accept", "dashing")
+	state_groups[0].states["idle"].register_transition("ui_accept", "dashing")
+	state_groups[0].states["idle"].register_transition("attack_1", "attack_1")
+	state_groups[0].states["moving"].register_transition("ui_accept", "dashing")
+	state_groups[0].states["moving"].register_transition("attack_1", "attack_1")
+	state_groups[0].states["dashing"].register_transition("ui_accept", "dashing")
+	state_groups[0].states["dashing"].register_transition("attack_1", "attack_1")
+	state_groups[0].states["attack_1"].register_transition("ui_accept", "dashing")
 
 func _physics_process(delta):
 	movement_input = Input.get_vector("left", "right", "up", "down")
-	aim_weapon(delta, mouse_pos, 10)
+	weapons.current_weapon.aim_weapon(delta, mouse_pos, 10)
 	actor_phys_process(delta)
 	GameManager.player_position = global_position
-	GameManager.player_rotation = weapon_root.rotation
+	GameManager.player_weapon_rotation = weapons.current_weapon.rotation
 
 func _input(event):
 	if event is InputEventMouseMotion:
@@ -58,10 +58,11 @@ func get_input(input : String) -> bool:
 func restore_default_state():
 	set__can_aim(true)
 	set__can_get_hit(true)
-	enable_hurtbox(false)
-	buffer_state("")
-	current_state = states["idle"]
-	current_state.enter()
+	weapons.current_weapon.set_active_hurtbox(false)
+	state_groups[0].buffer_state("")
+	state_groups[0].current_state = state_groups[0].states["idle"]
+	state_groups[0].current_state.enter()
+	state_groups[1].current_state = null
 
 func update_health_bar(_damage : int):
 	game.set_health_bar(base_health)

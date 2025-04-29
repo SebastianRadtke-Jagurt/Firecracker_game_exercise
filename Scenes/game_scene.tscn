@@ -1459,7 +1459,7 @@ enemy_to_spawn = "RANGER"
 [node name="Wave3" type="Node2D" parent="GameParent/WaveSpawner" node_paths=PackedStringArray("spawners")]
 position = Vector2(22, 0)
 script = ExtResource("6_ayu0a")
-spawners = [NodePath("../Wave2/Spawner1"), NodePath("../Wave2/Spawner2"), NodePath("../Wave2/Spawner3"), NodePath("../Wave2/Spawner4"), NodePath("Spawner5"), NodePath("Spawner6"), NodePath("Spawner7"), NodePath("Spawner8")]
+spawners = [NodePath("Spawner1"), NodePath("Spawner2"), NodePath("Spawner4"), NodePath("../Wave2/Spawner4"), NodePath("Spawner5"), NodePath("Spawner6"), NodePath("Spawner7"), NodePath("Spawner8")]
 
 [node name="Spawner1" type="Node2D" parent="GameParent/WaveSpawner/Wave3"]
 position = Vector2(118, 82)

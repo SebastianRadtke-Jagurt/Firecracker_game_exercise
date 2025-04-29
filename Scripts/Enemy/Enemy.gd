@@ -36,7 +36,7 @@ func actor_phys_process(delta):
 	super.actor_phys_process(delta)
 	
 	if !(current_state is StateAttackSequence):
-		reposition_weapon(delta)
+		weapons.current_weapon.reposition_weapon(delta)
 		
 	for input in ai_inputs:
 		ai_inputs[input] = false

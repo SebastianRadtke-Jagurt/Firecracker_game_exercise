@@ -13,3 +13,6 @@ var attack_time : float
 
 func _ready():
 	attack_time = anim_player.get_animation(animation_name).length
+
+func play():
+	anim_player.play(animation_name)

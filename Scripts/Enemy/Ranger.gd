@@ -1,21 +1,20 @@
 extends Enemy
 
 func _ready():
-	init()
 	events = {
 		"take_damage" : $Events/take_damage as EventTakeDamage,
 		"take_knockback" : $Events/take_knockback as EventTakeKnockback,
 	}
 	for event in events:
 		events[event].init(self)
-	states = {
+	state_groups[0].states = {
 		"idle" : $States/idle as StateIdle,
 		"moving" : $States/StateMoving as StateMoving,
 		"staggered" : $States/staggered as StateStaggered,
-		"attack_1" : $States/StateAttackSequence as StateAttackSequence,
+		"attack_1" : $States/StateWeaponAttack as StateWeaponAttack,
 	}
-	for state in states:
-		states[state].init(self)
+	for state_group in state_groups:
+		state_group.init(self)
 	setup_states()
 	
 	ai_states = {
@@ -29,12 +28,11 @@ func _ready():
 	for state in ai_states:
 		ai_states[state].init(self)
 	decide_AI()
-	attack_cooldown = 1
 	current_state.enter()
 
 func setup_states():
-	states["idle"].register_transition("attacking", "attack_1")
-	states["moving"].register_transition("attacking", "attack_1")
+	state_groups[0].states["idle"].register_transition("attacking", "attack_1")
+	state_groups[0].states["moving"].register_transition("attacking", "attack_1")
 
 func _physics_process(delta):
 	actor_phys_process(delta)
@@ -46,12 +44,3 @@ func decide_AI():
 	else:
 		current_ai_state = ai_states["approach"]
 	current_ai_state.enter()
-
-func shoot():
-	var new_arrow = GameManager.arrow.instantiate()
-	GameManager.game_parent.add_child(new_arrow)
-	(new_arrow as Projectile).global_position = weapon_offset.global_position
-	(new_arrow as Projectile).shoot(Vector2.DOWN.rotated(weapon_offset.global_rotation), \
-								buffered_attack, \
-								hurtbox_mask,
-								3)

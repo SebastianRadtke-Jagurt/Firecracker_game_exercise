@@ -3,6 +3,7 @@ class_name State
 
 var state_time : float = 0
 @export var state_time_max : float = 1
+@export var state_group_idx : int = 0
 var actor : Actor
 
 var transitions : Array[Transition]
@@ -26,8 +27,8 @@ func check_inputs():
 			return
 
 func exit(exit_message : String = ""):
-	state_time = 0
-	actor.exit_state(exit_message)
+	self.state_time = 0
+	actor.exit_state(exit_message, state_group_idx)
 
 func register_transition(input_name : String, state_name : String):
 	transitions.append(Transition.new(input_name, state_name))

@@ -7,7 +7,7 @@ var dashing_cooldown : float
 @export var dashing_cooldown_max : float = 1
 
 func enter():
-	actor.buffer_state("idle")
+	actor.buffer_state("idle", state_group_idx)
 	if dashing_cooldown > 0:
 		exit("")
 		return
@@ -29,7 +29,7 @@ func execute(delta):
 func check_inputs():
 	for transition in transitions:
 		if actor.get_input(transition.input_name):
-			actor.buffer_state(transition.state_name)
+			actor.buffer_state(transition.state_name, state_group_idx)
 			return
 
 func cooldown():

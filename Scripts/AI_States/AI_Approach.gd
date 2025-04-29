@@ -1,7 +1,7 @@
 extends AI_State
 
 func execute(delta):
-	actor.aim_weapon(delta, GameManager.player_position, 3)
+	actor.weapons.current_weapon.aim_weapon(delta, GameManager.player_position, 3)
 	
 	var dir = actor.global_position.direction_to(GameManager.player_position)
 	var movement_destination = GameManager.player_position - dir * (actor.approach_distance_min + actor.approach_distance_max) / 2

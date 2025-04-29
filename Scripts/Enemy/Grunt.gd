@@ -1,7 +1,6 @@
 extends Enemy
 
 func _ready():
-	init()
 	events = {
 		"take_damage" : $Events/take_damage as EventTakeDamage,
 		"take_knockback" : $Events/take_knockback as EventTakeKnockback,
@@ -10,14 +9,14 @@ func _ready():
 	for event in events:
 		events[event].init(self)
 	
-	states = {
+	state_groups[0].states = {
 		"idle" : $States/idle as StateIdle,
 		"moving" : $States/StateMoving as StateMoving,
-		"attack_1" : $States/StateAttackSequence as StateAttackSequence,
+		"attack_1" : $States/StateWeaponAttack as StateWeaponAttack,
 		"staggered" : $States/staggered as StateStaggered,
 	}
-	for state in states:
-		states[state].init(self)
+	for state_group in state_groups:
+		state_group.init(self)
 	setup_states()
 	
 	ai_states = {
@@ -34,8 +33,8 @@ func _ready():
 	current_state.enter()
 
 func setup_states():
-	states["idle"].register_transition("attacking", "attack_1")
-	states["moving"].register_transition("attacking", "attack_1")
+	state_groups[0].states["idle"].register_transition("attacking", "attack_1")
+	state_groups[0].states["moving"].register_transition("attacking", "attack_1")
 
 func _physics_process(delta):
 	actor_phys_process(delta)
