@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://Scripts/Enemy/TrainingDummy.gd" id="1_e3qa8"]
 [ext_resource type="Texture2D" uid="uid://bpv0qjmmicqae" path="res://Assets/Kenney_Tiny_Dungeon/Tiles/tile_0103.png" id="2_inqed"]
 [ext_resource type="Script" path="res://Scripts/Hurtbox.gd" id="3_oqax2"]
-[ext_resource type="Script" path="res://Scripts/States/StateIdle.gd" id="5_fskb6"]
+[ext_resource type="Script" path="res://Scripts/States/StateIdleMovement.gd" id="5_fskb6"]
 [ext_resource type="Script" path="res://Scripts/States/StateStaggered.gd" id="6_uinol"]
 [ext_resource type="Script" path="res://Scripts/Events/EventTakeKnockback.gd" id="7_ikv6o"]
 [ext_resource type="Script" path="res://Scripts/Events/EventTakeDamage.gd" id="8_u6ix0"]

@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://Scripts/Weapons/Weapons.gd" id="3_f17r2"]
 [ext_resource type="PackedScene" uid="uid://csvlmla2104iq" path="res://Scenes/Weapons/enemy_big_sword.tscn" id="4_qmos4"]
 [ext_resource type="Script" path="res://Scripts/States/StateGroup.gd" id="5_e23yf"]
-[ext_resource type="Script" path="res://Scripts/States/StateIdle.gd" id="5_oq30v"]
+[ext_resource type="Script" path="res://Scripts/States/StateIdleMovement.gd" id="5_oq30v"]
 [ext_resource type="Script" path="res://Scripts/States/StateStaggered.gd" id="6_y7wuj"]
 [ext_resource type="Script" path="res://Scripts/States/StateWeaponAttack.gd" id="8_4euol"]
 [ext_resource type="Script" path="res://Scripts/States/StateMoving.gd" id="9_5qvno"]

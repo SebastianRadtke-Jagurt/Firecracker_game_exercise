@@ -5,7 +5,10 @@ class_name Actor
 var events : Dictionary
 var sounds : Dictionary
 
+signal on_get_hit_check
+var get_hit_abort : bool = false
 signal on_get_hit(damage : int, stagger : int, knockback : int, attack_dir : Vector2, attacker : Actor)
+signal on_get_hit_deny
 signal on_after_get_hit(damage : int)
 signal on_death
 signal on_hit(attacked : Actor)
@@ -78,6 +81,13 @@ func set__can_get_hit(can_get_hit: bool):
 func set__can_get_deflected(_can_get_deflected : bool):
 	self.can_clash_sword = _can_get_deflected
 
+func set_active_transition(state_name, active):
+	for state_group in state_groups:
+		for state in state_group.states:
+			for transition in state_group.states[state].transitions:
+				if transition.state_name == state_name:
+					transition.active = active
+
 func buffer_state(state : String, state_group_idx : int):
 	state_groups[state_group_idx].buffered_state = state
 
@@ -93,11 +103,19 @@ func get_input(_input : String) -> bool:
 func get_hit(damage : int, stagger : int, knockback : int, attack_dir : Vector2, attacker : Actor):
 	if get_hit_cooldown > 0:
 		return
-		
+	
+	on_get_hit_check.emit()
+	
+	if get_hit_abort:
+		get_hit_abort = false
+		on_get_hit_deny.emit()
+		return
+	
 	current_state.state_time = 0
 	get_hit_cooldown = get_hit_cooldown_max
 	
-	if attacker != null: attacker.on_hit.emit(self)
+	if attacker != null: 
+		attacker.on_hit.emit(self)
 	
 	on_get_hit.emit(damage, stagger, knockback, attack_dir, attacker)
 	on_after_get_hit.emit(damage)

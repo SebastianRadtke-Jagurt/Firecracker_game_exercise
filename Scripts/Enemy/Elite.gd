@@ -9,7 +9,7 @@ func _ready():
 	for event in events:
 		events[event].init(self)
 	state_groups[0].states = {
-		"idle" : $States/idle as StateIdle,
+		"idle" : $States/idle as StateIdleMovement,
 		"moving" : $States/StateMoving as StateMoving,
 		"attack_1" : $States/StateWeaponAttack as StateWeaponAttack,
 		"attack_2" : $States/StateWeaponAttack2 as StateWeaponAttack,

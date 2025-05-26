@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://bxkqdgddbasbg" path="res://Scenes/Weapons/enemy_axe.tscn" id="3_a8h1j"]
 [ext_resource type="Script" path="res://Scripts/Weapons/Weapons.gd" id="3_achbw"]
 [ext_resource type="Script" path="res://Scripts/States/StateGroup.gd" id="5_tu820"]
-[ext_resource type="Script" path="res://Scripts/States/StateIdle.gd" id="5_vo0k0"]
+[ext_resource type="Script" path="res://Scripts/States/StateIdleMovement.gd" id="5_vo0k0"]
 [ext_resource type="Script" path="res://Scripts/States/StateStaggered.gd" id="6_7ux35"]
 [ext_resource type="Script" path="res://Scripts/States/StateWeaponAttack.gd" id="8_h7vkf"]
 [ext_resource type="Script" path="res://Scripts/States/StateMoving.gd" id="9_2djc4"]

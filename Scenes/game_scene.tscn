@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://caiw5bptistk1"]
+[gd_scene load_steps=25 format=3 uid="uid://caiw5bptistk1"]
 
 [ext_resource type="Script" path="res://Scripts/Game.gd" id="1_3ntji"]
 [ext_resource type="Texture2D" uid="uid://bbjyk0r3y0nur" path="res://Assets/Kenney_Tiny_Dungeon/Tilemap/tilemap.png" id="2_03g7t"]
@@ -14,7 +14,12 @@
 [ext_resource type="Theme" uid="uid://doxludjd65x6r" path="res://Layouts/audio_layouts/audio.tres" id="12_5pnul"]
 [ext_resource type="Theme" uid="uid://da85xqlgbylpq" path="res://Layouts/music.tres" id="13_0epew"]
 [ext_resource type="StyleBox" uid="uid://ddvqxnost05wn" path="res://Layouts/health/health_bar_parent.tres" id="13_pbl5g"]
+[ext_resource type="Script" path="res://Scripts/UIWeaponChoice.gd" id="14_af806"]
 [ext_resource type="StyleBox" uid="uid://ygt0maektodf" path="res://Layouts/health/health_bar.tres" id="14_h2w64"]
+[ext_resource type="Script" path="res://Scripts/UIWeaponUltimate.gd" id="17_pn74p"]
+[ext_resource type="Texture2D" uid="uid://o6tdeo2pshaq" path="res://Assets/Kenney_Tiny_Dungeon/Tiles/tile_0104.png" id="17_yy3o4"]
+[ext_resource type="StyleBox" uid="uid://dogr8gr17rwki" path="res://Layouts/weapon_ultimate/charge_bar_bg.tres" id="18_cmylo"]
+[ext_resource type="StyleBox" uid="uid://cwxs5shjscgh1" path="res://Layouts/weapon_ultimate/charge_bar.tres" id="19_6uf82"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_iulxs"]
 texture = ExtResource("2_03g7t")
@@ -1373,6 +1378,9 @@ terrain_set_0/terrain_1/color = Color(0.811765, 0.509804, 0.329412, 1)
 sources/0 = SubResource("TileSetAtlasSource_iulxs")
 sources/1 = SubResource("TileSetAtlasSource_iiu3p")
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rv33h"]
+bg_color = Color(0.374139, 0.374139, 0.374139, 1)
+
 [node name="GameScene" type="Node2D" node_paths=PackedStringArray("game_parent", "health_bar", "dead_screen", "win_screen")]
 script = ExtResource("1_3ntji")
 game_parent = NodePath("GameParent")
@@ -1984,6 +1992,63 @@ text = "Exit"
 [node name="HSeparator2" type="HSeparator" parent="Control/Win_Screen/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
+[node name="Weapon_choice" type="Panel" parent="Control"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.270089
+anchor_top = 0.191186
+anchor_right = 0.823661
+anchor_bottom = 0.753687
+offset_left = -212.0
+offset_top = -46.5952
+offset_right = -212.0
+offset_bottom = 3.40466
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+theme = ExtResource("11_bc0xl")
+script = ExtResource("14_af806")
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Control/Weapon_choice"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -260.0
+offset_top = 24.0
+offset_right = 260.0
+offset_bottom = 84.0
+grow_horizontal = 2
+size_flags_vertical = 0
+theme = ExtResource("11_bc0xl")
+theme_override_colors/font_color = Color(0.364706, 0.25098, 0.129412, 1)
+theme_override_font_sizes/font_size = 48
+text = "Choose a weapon!"
+horizontal_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/Weapon_choice"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 50.0
+offset_top = -348.0
+offset_right = -50.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/Weapon_choice/MarginContainer"]
+layout_mode = 2
+alignment = 1
+
 [node name="Panel" type="Panel" parent="Control"]
 layout_mode = 1
 anchors_preset = 10
@@ -1991,6 +2056,7 @@ anchor_right = 1.0
 offset_right = -672.0
 offset_bottom = 32.0
 grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_rv33h")
 
 [node name="HealthBar" type="ProgressBar" parent="Control/Panel"]
 layout_mode = 1
@@ -2014,6 +2080,30 @@ grow_horizontal = 2
 theme = ExtResource("11_bc0xl")
 theme_override_font_sizes/font_size = 8
 text = "MENU"
+
+[node name="UIWeaponUltimate" type="HSplitContainer" parent="Control/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.190476
+anchor_right = 0.380952
+anchor_bottom = 0.5625
+collapsed = true
+dragger_visibility = 2
+script = ExtResource("17_pn74p")
+metadata/_edit_use_anchors_ = true
+
+[node name="TextureRect" type="TextureRect" parent="Control/Panel/UIWeaponUltimate"]
+layout_mode = 2
+texture = ExtResource("17_yy3o4")
+
+[node name="ChargeBar" type="ProgressBar" parent="Control/Panel/UIWeaponUltimate"]
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_styles/background = ExtResource("18_cmylo")
+theme_override_styles/fill = ExtResource("19_6uf82")
+step = 1.0
+value = 100.0
+show_percentage = false
 
 [connection signal="pressed" from="Control/Menu/MarginContainer/VBoxContainer/Resume" to="Control" method="_on_resume_pressed"]
 [connection signal="drag_ended" from="Control/Menu/MarginContainer/VBoxContainer/Sound/sound_HSlider" to="Control/VolumeSettings" method="_on_sound_h_slider_drag_ended"]

@@ -1,5 +1,5 @@
 extends State
-class_name StateIdle
+class_name StateIdleMovement
 
 func enter():
 	self.actor.set__can_get_hit(true)

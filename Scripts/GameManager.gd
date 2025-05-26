@@ -1,6 +1,11 @@
 extends Node
 
 var game_parent : Node2D
+var game_menu : GameMenu
+
+var player : Player
+var player_position : Vector2 = Vector2.ZERO
+var player_weapon_rotation : float = 0
 
 #region Spawnables
 @onready var arrow = load("res://Scenes/arrow.tscn")
@@ -15,9 +20,6 @@ var game_parent : Node2D
 @onready var dash_refresh_particles = load("res://Scenes/dash_refresh_particles.tscn")
 
 enum Spawnable {ARROW, GRUNT, RANGER, VETERAN, ELITE}
-
-var player_position : Vector2 = Vector2.ZERO
-var player_weapon_rotation : float = 0
 
 @onready var spawnables = {
 	"ARROW" : arrow,

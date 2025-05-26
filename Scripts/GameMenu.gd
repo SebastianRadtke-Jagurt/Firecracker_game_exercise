@@ -3,6 +3,11 @@ class_name GameMenu
 
 @export var menu : Control
 @export var game : Game
+@onready var weapon_choice : WeaponChoice = $Weapon_choice
+@onready var weapon_ultimate : UIWeaponUltimate = $Panel/UIWeaponUltimate
+
+func _ready():
+	GameManager.game_menu = self
 
 func _input(event):
 	if event.is_action_pressed("ui_cancel"):

@@ -1,0 +1,10 @@
+[gd_resource type="StyleBoxTexture" load_steps=2 format=3 uid="uid://dogr8gr17rwki"]
+
+[ext_resource type="Texture2D" uid="uid://slgk7glw7lx" path="res://Assets/Kenney_UI_Pixel_Adventure/tile_0092.png" id="1_7cql8"]
+
+[resource]
+texture = ExtResource("1_7cql8")
+texture_margin_left = 6.0
+texture_margin_top = 4.0
+texture_margin_right = 6.0
+texture_margin_bottom = 4.0

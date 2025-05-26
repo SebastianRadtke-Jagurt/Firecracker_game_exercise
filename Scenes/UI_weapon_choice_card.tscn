@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://c8oeeqmu2kuu4"]
+
+[ext_resource type="Texture2D" uid="uid://o6tdeo2pshaq" path="res://Assets/Kenney_Tiny_Dungeon/Tiles/tile_0104.png" id="1_qa23u"]
+
+[node name="UIWeaponChoiceCard" type="TextureButton"]
+offset_right = 20.0
+offset_bottom = 20.0
+texture_normal = ExtResource("1_qa23u")
+stretch_mode = 3

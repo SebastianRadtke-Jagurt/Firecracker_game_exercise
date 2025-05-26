@@ -8,8 +8,8 @@ var _attack_stagger : int
 var _attack_knockback : int
 var attack_dir : Vector2
 
-func init(_actor : Actor):
-	actor = _actor
+func init(actor : Actor):
+	self.actor = actor
 
 func enable_hurtbox(is_enabled, _collision_mask, attack : Attack, _attack_dir : Vector2):
 	if !is_enabled:

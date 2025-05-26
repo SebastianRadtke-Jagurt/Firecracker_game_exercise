@@ -53,12 +53,6 @@ func execute(delta : float):
 		exit("")
 		return
 
-func check_inputs():
-	for transition in transitions:
-		if actor.get_input(transition.input_name):
-			actor.buffer_state(transition.state_name, state_group_idx)
-			return
-
 func sequence_fall_out(delta):
 	if sequence_continuity_timer > 0:
 		sequence_continuity_timer -= delta

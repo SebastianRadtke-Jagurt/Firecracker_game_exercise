@@ -8,7 +8,7 @@ func _ready():
 	for event in events:
 		events[event].init(self)
 	state_groups[0].states = {
-		"idle" : $States/idle as StateIdle,
+		"idle" : $States/idle as StateIdleMovement,
 		"staggered" : $States/staggered as StateStaggered,
 	}
 	for state_group in state_groups:

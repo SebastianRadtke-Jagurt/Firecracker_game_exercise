@@ -22,7 +22,7 @@ func execute(_delta : float):
 
 func check_inputs():
 	for transition in transitions:
-		if actor.get_input(transition.input_name):
+		if actor.get_input(transition.input_name) && transition.active:
 			exit(transition.state_name)
 			return
 
@@ -36,6 +36,7 @@ func register_transition(input_name : String, state_name : String):
 class Transition:
 	var input_name : String
 	var state_name : String
+	var active : bool = true
 	
 	func _init(_input_name : String, _state_name : String):
 		input_name = _input_name

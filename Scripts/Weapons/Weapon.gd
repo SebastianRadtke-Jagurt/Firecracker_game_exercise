@@ -5,7 +5,7 @@ class_name Weapon
 @export var hurtbox : Hurtbox
 @export var anim_player : AnimationPlayer
 @export var attack_sequences : Array[StateAttackSequence]
-@export var starting_attack_cd : int = 1
+@export var starting_attack_cd : float = 1
 
 var weapons_parent : Weapons
 var actor : Actor
@@ -16,16 +16,19 @@ var attack_cooldown = 0
 var can_aim : bool = true
 
 var charge : float = 0
-var charge_max = 10
+@export var charge_max = 10
 var charge_maxxed : bool:
 	get:
 		return charge >= charge_max
 
-func init(parent : Weapons, _actor : Actor):
+@export var weapon_texture : Texture2D
+
+func init(parent : Weapons, actor : Actor):
 	weapons_parent = parent
-	self.actor = _actor
+	self.actor = actor
+	if hurtbox != null: hurtbox.init(actor)
 	for _as in attack_sequences:
-		_as.init(_actor)
+		_as.init(actor)
 
 func _ready():
 	attack_cooldown = starting_attack_cd
@@ -40,9 +43,6 @@ func enter_attack(attack_sequence_idx : int):
 
 func execute_attack(delta, attack_sequence_idx : int): 
 	attack_sequences[attack_sequence_idx].execute(delta)
-
-func check_inputs(attack_sequence_idx : int): 
-	attack_sequences[attack_sequence_idx].check_inputs()
 
 func set_active_hurtbox(active : bool):
 	hurtbox.enable_hurtbox(active, actor.hurtbox_mask, buffered_attack, get_attack_rotation())
@@ -71,3 +71,26 @@ func set__can_aim(can : bool):
 
 func cancel_anim():
 	anim_player.stop()
+
+func add_charge(value : float):
+	charge += value
+	# Update UI of weapon charge
+	GameManager.game_menu.weapon_ultimate.update_bar(charge / charge_max * 100)
+
+func swap_out():
+	pass
+
+func swap_in():
+	pass
+
+func ultimate_enter():
+	pass
+
+func ultimate_execute(_delta : float):
+	pass
+
+func ultimate_exit():
+	pass
+
+func get_ultimate_time() -> float:
+	return 1.0

@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://bul12e5w8nvfk"]
 
-[ext_resource type="Script" path="res://Scripts/Weapons/Sword.gd" id="1_af2bw"]
+[ext_resource type="Script" path="res://Scripts/Weapons/Weapon.gd" id="1_se74s"]
 [ext_resource type="Texture2D" uid="uid://o6tdeo2pshaq" path="res://Assets/Kenney_Tiny_Dungeon/Tiles/tile_0104.png" id="2_hfbpo"]
 [ext_resource type="Script" path="res://Scripts/Hurtbox.gd" id="3_knu0w"]
 [ext_resource type="Script" path="res://Scripts/Weapons/WeaponAttackSequence.gd" id="4_5gsos"]
@@ -129,7 +129,7 @@ _data = {
 }
 
 [node name="enemy_sword_root" type="Node2D" node_paths=PackedStringArray("offset", "hurtbox", "anim_player", "attack_sequences")]
-script = ExtResource("1_af2bw")
+script = ExtResource("1_se74s")
 offset = NodePath("sword_offset")
 hurtbox = NodePath("sword_offset/sword_parent/hurtbox_Area2D")
 anim_player = NodePath("AnimationPlayer")

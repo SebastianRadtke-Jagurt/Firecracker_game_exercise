@@ -1,8 +1,7 @@
-[gd_scene load_steps=27 format=3 uid="uid://b0hx5nkucpnjs"]
+[gd_scene load_steps=30 format=3 uid="uid://b0hx5nkucpnjs"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_4r356"]
 [ext_resource type="Texture2D" uid="uid://ogixvk0fa3d" path="res://Assets/Kenney_Tiny_Dungeon/Tiles/tile_0085.png" id="1_5g541"]
-[ext_resource type="Script" path="res://Scripts/States/StateIdle.gd" id="2_p7yon"]
 [ext_resource type="Script" path="res://Scripts/Hurtbox.gd" id="4_7eghw"]
 [ext_resource type="Script" path="res://Scripts/States/StateMoving.gd" id="4_wq3en"]
 [ext_resource type="Script" path="res://Scripts/Weapons/Weapons.gd" id="5_2qvo4"]
@@ -11,10 +10,14 @@
 [ext_resource type="Script" path="res://Scripts/States/StateStaggered.gd" id="6_6bp4v"]
 [ext_resource type="Script" path="res://Scripts/States/StateWeaponAttack.gd" id="7_lmfvp"]
 [ext_resource type="Script" path="res://Scripts/States/StateGroup.gd" id="7_ngvgy"]
+[ext_resource type="Script" path="res://Scripts/States/StateIdleMovement.gd" id="8_5llvi"]
 [ext_resource type="Texture2D" uid="uid://o6tdeo2pshaq" path="res://Assets/Kenney_Tiny_Dungeon/Tiles/tile_0104.png" id="9_aesfj"]
-[ext_resource type="Script" path="res://Scripts/States/SwapWeapon.gd" id="12_p28k2"]
+[ext_resource type="Script" path="res://Scripts/States/StateSwapWeapon.gd" id="12_p28k2"]
+[ext_resource type="Script" path="res://Scripts/States/StateSwapWeaponCheck.gd" id="13_afplm"]
+[ext_resource type="Script" path="res://Scripts/States/StateSwapWeaponUltimate.gd" id="13_f077q"]
 [ext_resource type="AudioStream" uid="uid://cfaamtw61do72" path="res://Assets/Kenney_Audio/kenney_impact-sounds/Audio/impactMining_002.ogg" id="14_13xwg"]
 [ext_resource type="Script" path="res://Scripts/Events/EventTakeKnockback.gd" id="14_cq3sd"]
+[ext_resource type="Script" path="res://Scripts/States/StateNothing.gd" id="14_gtukf"]
 [ext_resource type="Script" path="res://Scripts/DeflectBuff.gd" id="14_rxg5q"]
 [ext_resource type="Script" path="res://Scripts/DeflectBuffApplier.gd" id="14_skhl4"]
 [ext_resource type="Script" path="res://Scripts/Events/EventTakeDamage.gd" id="15_ainmn"]
@@ -219,7 +222,7 @@ script = ExtResource("7_ngvgy")
 current_state = NodePath("idle")
 
 [node name="idle" type="Node" parent="States"]
-script = ExtResource("2_p7yon")
+script = ExtResource("8_5llvi")
 
 [node name="moving" type="Node" parent="States"]
 script = ExtResource("4_wq3en")
@@ -237,15 +240,25 @@ state_time_max = 0.2
 script = ExtResource("7_lmfvp")
 
 [node name="swap_weapon_ultimate" type="Node" parent="States"]
+script = ExtResource("13_f077q")
+
+[node name="swap_weapon_check" type="Node" parent="States"]
+script = ExtResource("13_afplm")
 
 [node name="AnimationPlayer2" type="AnimationPlayer" parent="."]
 
-[node name="States2" type="Node" parent="."]
+[node name="States2" type="Node" parent="." node_paths=PackedStringArray("current_state")]
 script = ExtResource("7_ngvgy")
+current_state = NodePath("nothing")
 
-[node name="swap_weapon" type="Node" parent="States2"]
+[node name="nothing" type="Node" parent="States2"]
+script = ExtResource("14_gtukf")
+state_group_idx = 1
+
+[node name="swap_weapons" type="Node" parent="States2"]
 script = ExtResource("12_p28k2")
 state_time_max = 0.4
+state_group_idx = 1
 
 [node name="Events" type="Node" parent="."]
 

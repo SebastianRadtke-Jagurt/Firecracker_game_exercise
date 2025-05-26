@@ -10,4 +10,7 @@ func execute(delta : float):
 	actor.weapons.current_weapon.execute_attack(delta, attack_sequence_idx)
 
 func check_inputs():
-	actor.weapons.current_weapon.check_inputs(attack_sequence_idx)
+	for transition in transitions:
+		if actor.get_input(transition.input_name) && transition.active:
+			actor.buffer_state(transition.state_name, state_group_idx)
+			return

@@ -28,7 +28,7 @@ func execute(delta):
 
 func check_inputs():
 	for transition in transitions:
-		if actor.get_input(transition.input_name):
+		if actor.get_input(transition.input_name) && transition.active:
 			actor.buffer_state(transition.state_name, state_group_idx)
 			return
 
