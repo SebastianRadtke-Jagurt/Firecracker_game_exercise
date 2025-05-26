@@ -27,8 +27,8 @@ In context of my game a character is a script which stores data, initiates behav
 
 ### So what are states and when they come into play?
 They are basically actions any character can perform such as moving, attacking etc.  
-States have general and unique set of behaviors which are executed when character enters them, during the time of persisting in them and when character exits them as well as an array of possible transitions to different states that are triggered by character's inputs.  
+States have general and unique set of behaviors which are executed when character enters them, during the time of persisting in them and when character exits them. They also have an array of possible transitions to different states that are triggered by character's inputs.  
 
-Simplest example would be "Moving" state. When entering the state as a result of a character input, the character starts playing a moving animation. When state persists it reads character's movement input and modifies character's movement vector accordingly. Otherwise when the state doesn't read any movement input, it exits itself and the character enters an idle state instead.
+Simplest example would be "Moving" state. When entering the state as a result of a character input, the character starts playing a moving animation. When state persists it reads character's movement input and modifies character's movement vector accordingly. Otherwise when the state doesn't read any movement input, the state exits itself and the character enters an idle state instead.
 
 This provides more clean and organized control over characters through transitions while also maintaining great flexibility of behaviors.
