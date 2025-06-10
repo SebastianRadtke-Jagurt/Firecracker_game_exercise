@@ -3,7 +3,9 @@
 [ext_resource type="Texture2D" uid="uid://o6tdeo2pshaq" path="res://Assets/Kenney_Tiny_Dungeon/Tiles/tile_0104.png" id="1_qa23u"]
 
 [node name="UIWeaponChoiceCard" type="TextureButton"]
+custom_minimum_size = Vector2(200, 200)
 offset_right = 20.0
 offset_bottom = 20.0
 texture_normal = ExtResource("1_qa23u")
-stretch_mode = 3
+ignore_texture_size = true
+stretch_mode = 5

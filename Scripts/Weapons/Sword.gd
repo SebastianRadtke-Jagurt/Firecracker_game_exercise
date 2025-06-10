@@ -7,14 +7,12 @@ var can_clash_sword = false
 
 var counter_hit_count : int = 5
 var current_counter_hit_count : int = 0
-var damage : int = 5
 var damage_multiplier : float = 5
 
 var zone_base_radius : Vector2
 var zone_radius = 128
 
 var counter_time : float = 5.0
-var attack_time : float = 0.25
 
 var current_time : float = 0
 var stage : int = 0
@@ -23,19 +21,17 @@ func _ready():
 	zone_base_radius = zone.scale
 
 func ultimate_enter():
+	super.ultimate_enter()
 	#Enter a counter state
 	# 1. Create circular zone (graphic) 
 	stage = 0
-	charge = 0
+	add_charge(0)
 	current_time = counter_time
 	zone.visible = true
 	zone.monitoring = true
 	zone.scale = zone_base_radius * Vector2(zone_radius/10 ,zone_radius/10)
-	# 1? Decal/vfx on enemies inside the zone
-	# 2. Actor can't attack or dash
-	actor.set_active_transition("attack_1", false)
-	actor.set_active_transition("dash", false)
-	# 3. When hit create circular physics cast for enemies and
+	# 1.1? Decal/vfx on enemies inside the zone
+	# 2. When hit create circular physics cast for enemies and
 	#    any enemies in the cast are dealt 5x sword damage
 	actor.on_get_hit_check.connect(check_counter)
 	actor.on_get_hit_deny.connect(cast_counter.bind(damage))
@@ -87,8 +83,9 @@ func cast_counter(counter_damage : int):
 		ultimate_exit()
 
 func swap_in():
+	super.swap_in()
 	actor.on_hit.connect(add_sword_charge)
-	actor.on_sword_clash.connect(add_sword_charge2)
+	actor.on_weapon_clash.connect(add_sword_charge2)
 	add_charge(0)
 
 func add_sword_charge(_actor : Actor): add_charge(1)
@@ -96,7 +93,8 @@ func add_sword_charge2(_actor : Actor): add_charge(2)
 
 func swap_out():
 	actor.on_hit.disconnect(add_sword_charge)
-	actor.on_sword_clash.disconnect(add_sword_charge2)
+	actor.on_weapon_clash.disconnect(add_sword_charge2)
+	super.swap_out()
 
 func get_ultimate_time() -> float:
 	return counter_time + attack_time

@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://baott8g1rnrl7"]
 
-[ext_resource type="Script" path="res://Scripts/Weapons/Bow.gd" id="1_eq62j"]
+[ext_resource type="Script" path="res://Scripts/Weapons/EnemyBow.gd" id="1_4fdsa"]
 [ext_resource type="Texture2D" uid="uid://bapc6btqj1t0u" path="res://Assets/2D_bow.png" id="1_tohju"]
 [ext_resource type="Script" path="res://Scripts/Weapons/WeaponAttackSequence.gd" id="3_8icu2"]
 [ext_resource type="Script" path="res://Scripts/States/Attack.gd" id="4_rvs65"]
@@ -84,10 +84,11 @@ _data = {
 }
 
 [node name="enemy_bow_root" type="Node2D" node_paths=PackedStringArray("offset", "anim_player", "attack_sequences")]
-script = ExtResource("1_eq62j")
+script = ExtResource("1_4fdsa")
 offset = NodePath("weapon_offset")
 anim_player = NodePath("AnimationPlayer")
 attack_sequences = [NodePath("StateAttackSequence")]
+damage = 2
 
 [node name="weapon_offset" type="Node2D" parent="."]
 
@@ -116,3 +117,5 @@ stagger = 2
 knockback = 2
 next_attack_delay = 1.0
 displacement = 1.0
+
+[connection signal="on_init" from="." to="StateAttackSequence" method="init"]

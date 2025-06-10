@@ -1,0 +1,569 @@
+[gd_scene load_steps=18 format=3 uid="uid://dclx5jtfe7lef"]
+
+[ext_resource type="Script" path="res://Scripts/Weapons/Daggers.gd" id="1_m51v4"]
+[ext_resource type="Texture2D" uid="uid://bpv0qjmmicqae" path="res://Assets/Kenney_Tiny_Dungeon/Tiles/tile_0103.png" id="2_ltu3r"]
+[ext_resource type="Texture2D" uid="uid://d3nh0kxtc4hma" path="res://Assets/daggers.png" id="2_xad4r"]
+[ext_resource type="Script" path="res://Scripts/Hurtbox.gd" id="3_guse1"]
+[ext_resource type="Script" path="res://Scripts/Weapons/WeaponAttackSequence.gd" id="4_yk8s1"]
+[ext_resource type="Script" path="res://Scripts/States/Attack.gd" id="5_xfica"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2su26"]
+radius = 9.05539
+
+[sub_resource type="Animation" id="Animation_0na2m"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("dagger1_offset:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("dagger1_offset:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("dagger2_offset:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("dagger2_offset:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_s1yo0"]
+resource_name = "attack_single_1"
+length = 0.15
+step = 0.005
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.05, 0.14),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [true],
+"method": &"set_active_hurtbox"
+}, {
+"args": [false],
+"method": &"set_active_hurtbox"
+}]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.05, 0.07),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": ["stab1"],
+"method": &"play_sound"
+}, {
+"args": ["stab2"],
+"method": &"play_sound"
+}]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("dagger1_offset:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.08, 0.13),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -6), Vector2(0, 24), Vector2(0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("dagger1_offset:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("dagger2_offset:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.07, 0.1, 0.15),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -6), Vector2(0, 24), Vector2(0, 0)]
+}
+tracks/5/type = "method"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0.07, 0.145),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [true],
+"method": &"set_active_hurtbox2"
+}, {
+"args": [false],
+"method": &"set_active_hurtbox2"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_s6ojg"]
+resource_name = "attack_single_2"
+length = 0.15
+step = 0.01
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.06, 0.14),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [true],
+"method": &"set_active_hurtbox"
+}, {
+"args": [false],
+"method": &"set_active_hurtbox"
+}]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.06),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["swing"],
+"method": &"play_sound"
+}]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("dagger1_offset:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.04, 0.06, 0.12, 0.15),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-3, 0), Vector2(-3, 0), Vector2(-3, 30), Vector2(0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("dagger1_offset:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.04, 0.06, 0.12, 0.15),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -0.65564, -0.65564, 0.462348, 0.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("dagger2_offset:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.04, 0.06, 0.12, 0.15),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(3, 0), Vector2(3, 0), Vector2(3, 30), Vector2(0, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("dagger2_offset:rotation")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.04, 0.06, 0.12, 0.15),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.656244, 0.656244, -0.462512, 0.0]
+}
+tracks/6/type = "method"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath(".")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0.06, 0.14),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [true],
+"method": &"set_active_hurtbox2"
+}, {
+"args": [false],
+"method": &"set_active_hurtbox2"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_uynr2"]
+resource_name = "attack_single_3"
+length = 0.3
+step = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("dagger1_offset:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.299, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 2.09119, 2.09119, 0.523599, -1.0472, -2.61799, -4.18879, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("state_attack_sequence/3:displacement")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0, 8.0, 4.0]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.1, 0.29),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [true],
+"method": &"set_active_hurtbox"
+}, {
+"args": [false],
+"method": &"set_active_hurtbox"
+}]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["stab3"],
+"method": &"play_sound"
+}]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("dagger1_offset/dagger1_parent:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.299, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-7, 13), Vector2(0, 20), Vector2(0, 20), Vector2(-7, 13)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("dagger2_offset/dagger2_parent:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.299, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(7, 13), Vector2(0, 20), Vector2(0, 20), Vector2(7, 13)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("dagger2_offset:rotation")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.299, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -0.98313, -0.98313, -2.55342, -4.18879, -5.75959, -7.33038, 0.0]
+}
+tracks/7/type = "method"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath(".")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0.1, 0.29),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [true],
+"method": &"set_active_hurtbox2"
+}, {
+"args": [false],
+"method": &"set_active_hurtbox2"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_despi"]
+resource_name = "swap_in"
+length = 0.25
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("dagger1_offset:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.09, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(13, 20), Vector2(13, 35), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("dagger1_offset:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.09, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-3.14159, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_bt6in"]
+resource_name = "swap_out"
+length = 0.25
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("dagger1_offset:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.13, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(13, 35), Vector2(13, 20)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("dagger1_offset:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.13),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, -3.14159]
+}
+
+[sub_resource type="Animation" id="Animation_dsmrs"]
+resource_name = "ultimate"
+length = 0.25
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6kumg"]
+_data = {
+"RESET": SubResource("Animation_0na2m"),
+"attack_single_1": SubResource("Animation_s1yo0"),
+"attack_single_2": SubResource("Animation_s6ojg"),
+"attack_single_3": SubResource("Animation_uynr2"),
+"swap_in": SubResource("Animation_despi"),
+"swap_out": SubResource("Animation_bt6in"),
+"ultimate": SubResource("Animation_dsmrs")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_q2f0q"]
+radius = 8.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1fjr3"]
+radius = 14.4222
+
+[node name="daggers_root" type="Node2D" node_paths=PackedStringArray("offset2", "hurtbox2", "offset", "hurtbox", "anim_player", "attack_sequences")]
+script = ExtResource("1_m51v4")
+offset2 = NodePath("dagger2_offset")
+hurtbox2 = NodePath("dagger2_offset/dagger2_parent/hurtbox_Area2D")
+offset = NodePath("dagger1_offset")
+hurtbox = NodePath("dagger1_offset/dagger1_parent/hurtbox_Area2D")
+anim_player = NodePath("AnimationPlayer")
+attack_sequences = [NodePath("state_attack_sequence")]
+starting_attack_cd = 0.0
+damage = 2
+weapon_texture = ExtResource("2_xad4r")
+
+[node name="dagger1_offset" type="Node2D" parent="."]
+
+[node name="dagger1_parent" type="Node2D" parent="dagger1_offset"]
+position = Vector2(-7, 13)
+
+[node name="Sprite2D" type="Sprite2D" parent="dagger1_offset/dagger1_parent"]
+rotation = 3.14159
+texture = ExtResource("2_ltu3r")
+
+[node name="hurtbox_Area2D" type="Area2D" parent="dagger1_offset/dagger1_parent"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("3_guse1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="dagger1_offset/dagger1_parent/hurtbox_Area2D"]
+shape = SubResource("CircleShape2D_2su26")
+
+[node name="dagger2_offset" type="Node2D" parent="."]
+
+[node name="dagger2_parent" type="Node2D" parent="dagger2_offset"]
+position = Vector2(7, 13)
+
+[node name="Sprite2D" type="Sprite2D" parent="dagger2_offset/dagger2_parent"]
+rotation = 3.14159
+texture = ExtResource("2_ltu3r")
+
+[node name="hurtbox_Area2D" type="Area2D" parent="dagger2_offset/dagger2_parent"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("3_guse1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="dagger2_offset/dagger2_parent/hurtbox_Area2D"]
+shape = SubResource("CircleShape2D_2su26")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_6kumg")
+}
+
+[node name="state_attack_sequence" type="Node" parent="." node_paths=PackedStringArray("weapon")]
+script = ExtResource("4_yk8s1")
+weapon = NodePath("..")
+
+[node name="1" type="Node" parent="state_attack_sequence" node_paths=PackedStringArray("anim_player")]
+script = ExtResource("5_xfica")
+anim_player = NodePath("../../AnimationPlayer")
+animation_name = "attack_single_1"
+damage = 1
+stagger = 2
+knockback = 5
+next_attack_delay = 0.1
+displacement = 3.0
+
+[node name="2" type="Node" parent="state_attack_sequence" node_paths=PackedStringArray("anim_player")]
+script = ExtResource("5_xfica")
+anim_player = NodePath("../../AnimationPlayer")
+animation_name = "attack_single_2"
+damage = 1
+stagger = 2
+knockback = 5
+next_attack_delay = 0.1
+displacement = 3.0
+
+[node name="3" type="Node" parent="state_attack_sequence" node_paths=PackedStringArray("anim_player")]
+script = ExtResource("5_xfica")
+anim_player = NodePath("../../AnimationPlayer")
+animation_name = "attack_single_3"
+damage = 2
+stagger = 4
+knockback = 5
+next_attack_delay = 0.2
+displacement = 4.0
+
+[node name="Zone" type="Area2D" parent="."]
+scale = Vector2(1.25, 1.25)
+collision_layer = 0
+collision_mask = 2
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Zone"]
+shape = SubResource("CircleShape2D_q2f0q")
+
+[node name="Zone2" type="Area2D" parent="."]
+scale = Vector2(1.25, 1.25)
+collision_layer = 0
+collision_mask = 2
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Zone2"]
+shape = SubResource("CircleShape2D_1fjr3")
+
+[connection signal="on_init" from="." to="dagger1_offset/dagger1_parent/hurtbox_Area2D" method="init"]
+[connection signal="on_init" from="." to="dagger2_offset/dagger2_parent/hurtbox_Area2D" method="init"]
+[connection signal="on_init" from="." to="state_attack_sequence" method="init"]
+[connection signal="body_entered" from="dagger1_offset/dagger1_parent/hurtbox_Area2D" to="dagger1_offset/dagger1_parent/hurtbox_Area2D" method="_on_body_entered"]
+[connection signal="body_entered" from="dagger2_offset/dagger2_parent/hurtbox_Area2D" to="dagger2_offset/dagger2_parent/hurtbox_Area2D" method="_on_body_entered"]
+[connection signal="body_entered" from="Zone2" to="." method="mark_for_damage"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://c4f6fajwpkk1t"]
+[gd_scene load_steps=20 format=3 uid="uid://c4f6fajwpkk1t"]
 
 [ext_resource type="Texture2D" uid="uid://o6tdeo2pshaq" path="res://Assets/Kenney_Tiny_Dungeon/Tiles/tile_0104.png" id="1_2px8i"]
 [ext_resource type="Script" path="res://Scripts/Weapons/Sword.gd" id="1_om2px"]
@@ -6,6 +6,9 @@
 [ext_resource type="Script" path="res://Scripts/Weapons/WeaponAttackSequence.gd" id="4_tnt1e"]
 [ext_resource type="Script" path="res://Scripts/States/Attack.gd" id="5_u56t1"]
 [ext_resource type="Texture2D" uid="uid://bekuk546xg53s" path="res://Assets/circle256x256.png" id="6_i8gv2"]
+[ext_resource type="Script" path="res://Scripts/TempEffects/DeflectBuffApplier.gd" id="7_t46rn"]
+[ext_resource type="AudioStream" uid="uid://cfaamtw61do72" path="res://Assets/Audio/Kenney_Audio/kenney_impact-sounds/Audio/impactMining_002.ogg" id="8_fi82v"]
+[ext_resource type="Script" path="res://Scripts/TempEffects/DeflectBuff.gd" id="9_xdffl"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_xhn5g"]
 radius = 12.055
@@ -323,6 +326,7 @@ offset = NodePath("sword_offset")
 hurtbox = NodePath("sword_offset/sword_parent/hurtbox_Area2D")
 anim_player = NodePath("AnimationPlayer")
 attack_sequences = [NodePath("state_attack_sequence")]
+damage = 5
 weapon_texture = ExtResource("1_2px8i")
 
 [node name="sword_offset" type="Node2D" parent="."]
@@ -332,6 +336,7 @@ position = Vector2(0, 20)
 
 [node name="Sprite2D" type="Sprite2D" parent="sword_offset/sword_parent"]
 rotation = 3.14159
+scale = Vector2(1.23597, 1.23597)
 texture = ExtResource("1_2px8i")
 
 [node name="hurtbox_Area2D" type="Area2D" parent="sword_offset/sword_parent"]
@@ -379,6 +384,7 @@ damage = 4
 stagger = 4
 knockback = 5
 next_attack_delay = 0.2
+displacement = 8.0
 
 [node name="Zone" type="Area2D" parent="."]
 visible = false
@@ -394,4 +400,26 @@ self_modulate = Color(0.419608, 1, 1, 0.156863)
 scale = Vector2(0.0625, 0.0625)
 texture = ExtResource("6_i8gv2")
 
+[node name="Buffs" type="Node" parent="."]
+
+[node name="DeflectBuffApplier" type="Node" parent="Buffs" node_paths=PackedStringArray("sword", "buff_to_apply")]
+script = ExtResource("7_t46rn")
+sword = NodePath("../..")
+buff_to_apply = NodePath("DeflectBuff")
+buff_count_max = 3
+
+[node name="DeflectSound" type="AudioStreamPlayer2D" parent="Buffs/DeflectBuffApplier"]
+stream = ExtResource("8_fi82v")
+volume_db = 10.0
+
+[node name="DeflectBuff" type="Node" parent="Buffs/DeflectBuffApplier" node_paths=PackedStringArray("deflect_audio_player", "buff_particle_parent")]
+script = ExtResource("9_xdffl")
+deflect_audio_player = NodePath("../DeflectSound")
+buff_particle_parent = NodePath("../../..")
+movement_speed = 0.2
+attack_damage = 2
+
+[connection signal="on_init" from="." to="sword_offset/sword_parent/hurtbox_Area2D" method="init"]
+[connection signal="on_init" from="." to="state_attack_sequence" method="init"]
+[connection signal="on_init" from="." to="Buffs/DeflectBuffApplier" method="init"]
 [connection signal="body_entered" from="sword_offset/sword_parent/hurtbox_Area2D" to="sword_offset/sword_parent/hurtbox_Area2D" method="_on_body_entered"]

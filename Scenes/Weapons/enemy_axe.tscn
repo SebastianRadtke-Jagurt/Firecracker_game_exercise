@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://bxkqdgddbasbg"]
 
-[ext_resource type="Script" path="res://Scripts/Weapons/Axe.gd" id="1_l4quc"]
+[ext_resource type="Script" path="res://Scripts/Weapons/EnemyWeapon.gd" id="1_l3sag"]
 [ext_resource type="Texture2D" uid="uid://gy4601icaaos" path="res://Assets/Kenney_Tiny_Dungeon/Tiles/tile_0118.png" id="1_p0bpg"]
 [ext_resource type="Script" path="res://Scripts/Hurtbox.gd" id="2_5qjb1"]
 [ext_resource type="Script" path="res://Scripts/Weapons/WeaponAttackSequence.gd" id="3_0xgs0"]
@@ -212,11 +212,12 @@ _data = {
 }
 
 [node name="enemy_axe_root" type="Node2D" node_paths=PackedStringArray("offset", "hurtbox", "anim_player", "attack_sequences")]
-script = ExtResource("1_l4quc")
+script = ExtResource("1_l3sag")
 offset = NodePath("weapon_offset")
 hurtbox = NodePath("weapon_offset/weapon_parent/hurtbox_Area2D")
 anim_player = NodePath("AnimationPlayer")
 attack_sequences = [NodePath("StateAttackSequence"), NodePath("StateAttackSequence2")]
+damage = 5
 
 [node name="weapon_offset" type="Node2D" parent="."]
 
@@ -268,4 +269,7 @@ stagger = 4
 knockback = 5
 next_attack_delay = 2.0
 
+[connection signal="on_init" from="." to="weapon_offset/weapon_parent/hurtbox_Area2D" method="init"]
+[connection signal="on_init" from="." to="StateAttackSequence" method="init"]
+[connection signal="on_init" from="." to="StateAttackSequence2" method="init"]
 [connection signal="body_entered" from="weapon_offset/weapon_parent/hurtbox_Area2D" to="weapon_offset/weapon_parent/hurtbox_Area2D" method="_on_body_entered"]

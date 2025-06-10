@@ -7,12 +7,16 @@ class_name Weapon
 @export var attack_sequences : Array[StateAttackSequence]
 @export var starting_attack_cd : float = 1
 
+@export var damage : int  = 1
+@export var weapon_texture : Texture2D
+
 var weapons_parent : Weapons
 var actor : Actor
 
 var buffered_attack : Attack
 
 var attack_cooldown = 0
+var attack_time : float = 0.25
 var can_aim : bool = true
 
 var charge : float = 0
@@ -21,14 +25,17 @@ var charge_maxxed : bool:
 	get:
 		return charge >= charge_max
 
-@export var weapon_texture : Texture2D
+signal on_init(_actor : Actor)
+signal on_swap_in
+signal on_swap_out
 
-func init(parent : Weapons, actor : Actor):
+func init(parent : Weapons, _actor : Actor):
 	weapons_parent = parent
-	self.actor = actor
-	if hurtbox != null: hurtbox.init(actor)
-	for _as in attack_sequences:
-		_as.init(actor)
+	actor = _actor
+	#if hurtbox != null: hurtbox.init(_actor)
+	#for _as in attack_sequences:
+		#_as.init(_actor)
+	on_init.emit(actor)
 
 func _ready():
 	attack_cooldown = starting_attack_cd
@@ -77,14 +84,17 @@ func add_charge(value : float):
 	# Update UI of weapon charge
 	GameManager.game_menu.weapon_ultimate.update_bar(charge / charge_max * 100)
 
-func swap_out():
-	pass
-
 func swap_in():
-	pass
+	visible = true
+	GameManager.game_menu.weapon_ultimate.update_texture(weapon_texture)
+	on_swap_in.emit()
+
+func swap_out():
+	visible = false
+	on_swap_out.emit()
 
 func ultimate_enter():
-	pass
+	charge = 0
 
 func ultimate_execute(_delta : float):
 	pass
@@ -93,4 +103,4 @@ func ultimate_exit():
 	pass
 
 func get_ultimate_time() -> float:
-	return 1.0
+	return attack_time

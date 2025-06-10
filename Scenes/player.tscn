@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://b0hx5nkucpnjs"]
+[gd_scene load_steps=29 format=3 uid="uid://b0hx5nkucpnjs"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_4r356"]
 [ext_resource type="Texture2D" uid="uid://ogixvk0fa3d" path="res://Assets/Kenney_Tiny_Dungeon/Tiles/tile_0085.png" id="1_5g541"]
@@ -10,16 +10,15 @@
 [ext_resource type="Script" path="res://Scripts/States/StateStaggered.gd" id="6_6bp4v"]
 [ext_resource type="Script" path="res://Scripts/States/StateWeaponAttack.gd" id="7_lmfvp"]
 [ext_resource type="Script" path="res://Scripts/States/StateGroup.gd" id="7_ngvgy"]
+[ext_resource type="PackedScene" uid="uid://dclx5jtfe7lef" path="res://Scenes/Weapons/daggers.tscn" id="7_nxmkq"]
 [ext_resource type="Script" path="res://Scripts/States/StateIdleMovement.gd" id="8_5llvi"]
+[ext_resource type="PackedScene" uid="uid://bgx0ma4ffyrl0" path="res://Scenes/Weapons/bow.tscn" id="8_7vn5r"]
 [ext_resource type="Texture2D" uid="uid://o6tdeo2pshaq" path="res://Assets/Kenney_Tiny_Dungeon/Tiles/tile_0104.png" id="9_aesfj"]
 [ext_resource type="Script" path="res://Scripts/States/StateSwapWeapon.gd" id="12_p28k2"]
 [ext_resource type="Script" path="res://Scripts/States/StateSwapWeaponCheck.gd" id="13_afplm"]
 [ext_resource type="Script" path="res://Scripts/States/StateSwapWeaponUltimate.gd" id="13_f077q"]
-[ext_resource type="AudioStream" uid="uid://cfaamtw61do72" path="res://Assets/Kenney_Audio/kenney_impact-sounds/Audio/impactMining_002.ogg" id="14_13xwg"]
 [ext_resource type="Script" path="res://Scripts/Events/EventTakeKnockback.gd" id="14_cq3sd"]
 [ext_resource type="Script" path="res://Scripts/States/StateNothing.gd" id="14_gtukf"]
-[ext_resource type="Script" path="res://Scripts/DeflectBuff.gd" id="14_rxg5q"]
-[ext_resource type="Script" path="res://Scripts/DeflectBuffApplier.gd" id="14_skhl4"]
 [ext_resource type="Script" path="res://Scripts/Events/EventTakeDamage.gd" id="15_ainmn"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_kn6of"]
@@ -53,6 +52,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CollisionShape2D/sprite_offset/Sprite2D:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_4sq5t"]
@@ -161,11 +172,12 @@ _data = {
 "staggered": SubResource("Animation_vp3k3")
 }
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("state_groups", "anim_player", "attack_audio_player", "weapons", "current_state")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("state_groups", "graphics_parent", "anim_player", "attack_audio_player", "weapons", "current_state")]
 collision_layer = 4
 script = ExtResource("1_4r356")
 state_groups = [NodePath("States"), NodePath("States2")]
 base_health = 100
+graphics_parent = NodePath("CollisionShape2D")
 anim_player = NodePath("AnimationPlayer")
 attack_audio_player = NodePath("AttackSoundPlayer")
 weapons = NodePath("Weapons")
@@ -208,9 +220,16 @@ shape = SubResource("CircleShape2D_xhn5g")
 script = ExtResource("5_2qvo4")
 actor = NodePath("..")
 current_weapon = NodePath("sword")
-weapons = [NodePath("sword")]
+weapons = [NodePath("sword"), NodePath("daggers"), NodePath("bow_root")]
 
 [node name="sword" parent="Weapons" instance=ExtResource("6_5f2td")]
+damage = 1
+
+[node name="daggers" parent="Weapons" instance=ExtResource("7_nxmkq")]
+visible = false
+
+[node name="bow_root" parent="Weapons" instance=ExtResource("8_7vn5r")]
+visible = false
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -269,26 +288,6 @@ script = ExtResource("14_cq3sd")
 script = ExtResource("15_ainmn")
 
 [node name="AttackSoundPlayer" type="AudioStreamPlayer2D" parent="."]
-
-[node name="Buffs" type="Node" parent="."]
-
-[node name="DeflectBuffApplier" type="Node" parent="Buffs" node_paths=PackedStringArray("actor", "buff_to_apply")]
-script = ExtResource("14_skhl4")
-actor = NodePath("../..")
-buff_to_apply = NodePath("DeflectBuff")
-
-[node name="DeflectSound" type="AudioStreamPlayer2D" parent="Buffs/DeflectBuffApplier"]
-stream = ExtResource("14_13xwg")
-volume_db = 10.0
-
-[node name="DeflectBuff" type="Node" parent="Buffs/DeflectBuffApplier" node_paths=PackedStringArray("actor", "buff_applier", "deflect_audio_player", "buff_particle_parent")]
-script = ExtResource("14_rxg5q")
-actor = NodePath("../../..")
-buff_applier = NodePath("..")
-deflect_audio_player = NodePath("../DeflectSound")
-buff_particle_parent = NodePath("../../../sword_root/sword_offset/sword_parent")
-movement_speed = 0.2
-attack_damage = 2
 
 [connection signal="body_entered" from="sword_root/sword_offset/sword_parent/hurtbox_Area2D" to="sword_root/sword_offset/sword_parent/hurtbox_Area2D" method="_on_body_entered"]
 

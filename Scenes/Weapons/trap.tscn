@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=3 uid="uid://c66n654j0d6ci"]
+
+[ext_resource type="Script" path="res://Scripts/Weapons/Trap.gd" id="1_k4yey"]
+[ext_resource type="Script" path="res://Scripts/Hurtbox.gd" id="2_kgv7f"]
+[ext_resource type="Texture2D" uid="uid://r7l4sam46cdl" path="res://Assets/kenney_trap.png" id="3_5vsg8"]
+
+[sub_resource type="Curve" id="Curve_oa7wh"]
+_data = [Vector2(0, 0), 0.0, 8.5514, 0, 0, Vector2(0.126354, 1), 0.0, 0.0, 0, 0, Vector2(0.256318, 0), -10.0926, 3.27326, 0, 0, Vector2(0.375451, 0.443131), 0.0, 0.0, 0, 0, Vector2(0.505415, 0.00147712), -3.1661, 2.88115, 0, 0, Vector2(0.635379, 0.241507), 0.0, 0.0, 0, 0, Vector2(0.758123, 0.0110784), -2.55314, 1.32976, 0, 0, Vector2(0.873646, 0.10709), 0.0, 0.0, 0, 0, Vector2(1, 0), -1.09322, 0.0, 0, 0]
+point_count = 9
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dl2bh"]
+radius = 13.0
+
+[node name="Trap" type="Node2D" node_paths=PackedStringArray("hurtbox")]
+script = ExtResource("1_k4yey")
+hurtbox = NodePath("Area2D")
+throw_curve = SubResource("Curve_oa7wh")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+monitoring = false
+script = ExtResource("2_kgv7f")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_dl2bh")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.625, 0.625)
+texture = ExtResource("3_5vsg8")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]

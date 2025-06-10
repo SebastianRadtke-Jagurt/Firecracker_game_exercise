@@ -8,8 +8,8 @@ var _attack_stagger : int
 var _attack_knockback : int
 var attack_dir : Vector2
 
-func init(actor : Actor):
-	self.actor = actor
+func init(_actor : Actor):
+	actor = _actor
 
 func enable_hurtbox(is_enabled, _collision_mask, attack : Attack, _attack_dir : Vector2):
 	if !is_enabled:
@@ -25,7 +25,7 @@ func _on_body_entered(body):
 	if body is Actor:
 		body.get_hit(_attack_damage, _attack_stagger, _attack_knockback, attack_dir, actor)
 	elif body is Hurtbox:
-			actor.on_sword_clash.emit(body.actor)
+			actor.on_weapon_clash.emit(body.actor)
 
 func try_get_deflected() -> bool:
 	return actor.try_get_deflected()

@@ -1,0 +1,251 @@
+[gd_scene load_steps=16 format=3 uid="uid://bgx0ma4ffyrl0"]
+
+[ext_resource type="Script" path="res://Scripts/Weapons/Bow.gd" id="1_1ryi7"]
+[ext_resource type="Texture2D" uid="uid://bapc6btqj1t0u" path="res://Assets/2D_bow.png" id="2_ausa1"]
+[ext_resource type="Script" path="res://Scripts/Weapons/WeaponAttackSequence.gd" id="3_t4ooc"]
+[ext_resource type="Script" path="res://Scripts/States/Attack.gd" id="4_iqbgc"]
+[ext_resource type="Script" path="res://Scripts/TempEffects/BowUltimateBuffApplier.gd" id="5_u1go7"]
+[ext_resource type="Script" path="res://Scripts/TempEffects/BowUltimateBuff.gd" id="6_g4v50"]
+[ext_resource type="Script" path="res://Scripts/TempEffects/BowTrapDebuffApplier.gd" id="7_3gxa0"]
+[ext_resource type="Script" path="res://Scripts/TempEffects/BowTrapDebuff.gd" id="8_1hv5c"]
+
+[sub_resource type="Animation" id="Animation_0na2m"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("weapon_offset:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_5l50l"]
+resource_name = "attack_2"
+length = 0.6
+step = 0.005
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.46),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [3],
+"method": &"shoot_multi"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("weapon_offset:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.36, 0.46, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -6), Vector2(0, -6), Vector2(0, 4), Vector2(0, 0)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.46),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["bow_release"],
+"method": &"play_sound"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_s1yo0"]
+resource_name = "attack_single_1"
+length = 0.5
+step = 0.02
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("weapon_offset:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.36, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -4), Vector2(0, 4), Vector2(0, 0)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.36),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"shoot"
+}]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.36),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["bow_release"],
+"method": &"play_sound"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_p4eeh"]
+resource_name = "swap_in"
+length = 0.25
+
+[sub_resource type="Animation" id="Animation_tl6ui"]
+resource_name = "swap_out"
+length = 0.25
+
+[sub_resource type="Animation" id="Animation_flbbm"]
+resource_name = "ultimate"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("weapon_offset:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.6, 0.8, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -7), Vector2(0, -7), Vector2(0, 7), Vector2(0, 0)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.6, 1),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"shoot_big"
+}, {
+"args": [],
+"method": &"flip_out"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tdat7"]
+_data = {
+"RESET": SubResource("Animation_0na2m"),
+"attack_2": SubResource("Animation_5l50l"),
+"attack_single_1": SubResource("Animation_s1yo0"),
+"swap_in": SubResource("Animation_p4eeh"),
+"swap_out": SubResource("Animation_tl6ui"),
+"ultimate": SubResource("Animation_flbbm")
+}
+
+[node name="bow_root" type="Node2D" node_paths=PackedStringArray("offset", "anim_player", "attack_sequences")]
+script = ExtResource("1_1ryi7")
+offset = NodePath("weapon_offset")
+anim_player = NodePath("AnimationPlayer")
+attack_sequences = [NodePath("StateAttackSequence")]
+starting_attack_cd = 0.0
+damage = 2
+weapon_texture = ExtResource("2_ausa1")
+charge_max = 0
+
+[node name="weapon_offset" type="Node2D" parent="."]
+
+[node name="weapon_parent" type="Node2D" parent="weapon_offset"]
+position = Vector2(0, 20)
+
+[node name="Sprite2D" type="Sprite2D" parent="weapon_offset/weapon_parent"]
+rotation = 4.71239
+texture = ExtResource("2_ausa1")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_tdat7")
+}
+
+[node name="StateAttackSequence" type="Node" parent="." node_paths=PackedStringArray("weapon")]
+script = ExtResource("3_t4ooc")
+weapon = NodePath("..")
+
+[node name="1" type="Node" parent="StateAttackSequence" node_paths=PackedStringArray("anim_player")]
+script = ExtResource("4_iqbgc")
+anim_player = NodePath("../../AnimationPlayer")
+animation_name = "attack_single_1"
+damage = 2
+stagger = 2
+knockback = 2
+next_attack_delay = 0.1
+
+[node name="2" type="Node" parent="StateAttackSequence" node_paths=PackedStringArray("anim_player")]
+script = ExtResource("4_iqbgc")
+anim_player = NodePath("../../AnimationPlayer")
+animation_name = "attack_single_1"
+damage = 2
+stagger = 2
+knockback = 2
+next_attack_delay = 0.1
+
+[node name="3" type="Node" parent="StateAttackSequence" node_paths=PackedStringArray("anim_player")]
+script = ExtResource("4_iqbgc")
+anim_player = NodePath("../../AnimationPlayer")
+animation_name = "attack_2"
+damage = 2
+stagger = 2
+knockback = 2
+next_attack_delay = 0.2
+
+[node name="UltimateAttackSeqence" type="Node" parent="." node_paths=PackedStringArray("weapon")]
+script = ExtResource("3_t4ooc")
+weapon = NodePath("..")
+
+[node name="1" type="Node" parent="UltimateAttackSeqence" node_paths=PackedStringArray("anim_player")]
+script = ExtResource("4_iqbgc")
+anim_player = NodePath("../../AnimationPlayer")
+animation_name = "ultimate"
+damage = 5
+stagger = 2
+knockback = 2
+next_attack_delay = 0.1
+
+[node name="Bow_Ultimate_Buff_Applier" type="Node" parent="." node_paths=PackedStringArray("buff_to_apply")]
+script = ExtResource("5_u1go7")
+buff_to_apply = NodePath("Bow_Ultimate_Buff")
+
+[node name="Bow_Ultimate_Buff" type="Node" parent="Bow_Ultimate_Buff_Applier"]
+script = ExtResource("6_g4v50")
+
+[node name="Bow_Trap_Debuff_Applier" type="Node" parent="." node_paths=PackedStringArray("buff_to_apply")]
+script = ExtResource("7_3gxa0")
+buff_to_apply = NodePath("Bow_Trap_Debuff")
+
+[node name="Bow_Trap_Debuff" type="Node" parent="Bow_Trap_Debuff_Applier"]
+script = ExtResource("8_1hv5c")
+
+[connection signal="on_init" from="." to="StateAttackSequence" method="init"]
+[connection signal="on_init" from="." to="UltimateAttackSeqence" method="init"]
+[connection signal="on_init" from="." to="Bow_Ultimate_Buff_Applier" method="init"]

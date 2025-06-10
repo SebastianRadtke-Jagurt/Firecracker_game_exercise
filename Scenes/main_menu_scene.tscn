@@ -3,10 +3,10 @@
 [ext_resource type="Script" path="res://Scripts/MainMenu.gd" id="1_w651j"]
 [ext_resource type="Theme" uid="uid://dj2tjnejicmva" path="res://Layouts/menu.tres" id="2_7kjcu"]
 [ext_resource type="Script" path="res://Scripts/VolumeSettings.gd" id="2_d5nvu"]
-[ext_resource type="AudioStream" uid="uid://c8q5ycxoqurtv" path="res://Assets/Kenney_Audio/kenney_interface-sounds/Audio/bong_001.ogg" id="3_iweo2"]
+[ext_resource type="AudioStream" uid="uid://c8q5ycxoqurtv" path="res://Assets/Audio/Kenney_Audio/kenney_interface-sounds/Audio/bong_001.ogg" id="3_iweo2"]
 [ext_resource type="Theme" uid="uid://doxludjd65x6r" path="res://Layouts/audio_layouts/audio.tres" id="3_pj4va"]
 [ext_resource type="Theme" uid="uid://da85xqlgbylpq" path="res://Layouts/music.tres" id="4_j673s"]
-[ext_resource type="AudioStream" uid="uid://dpoqjkkvsewfc" path="res://Assets/UnderSiege!_byDarrenCurtis.ogg" id="6_8xmlt"]
+[ext_resource type="AudioStream" uid="uid://dpoqjkkvsewfc" path="res://Assets/Audio/UnderSiege!_byDarrenCurtis.ogg" id="6_8xmlt"]
 
 [node name="MainMenuScene" type="Node2D"]
 

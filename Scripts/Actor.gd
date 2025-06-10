@@ -12,7 +12,7 @@ signal on_get_hit_deny
 signal on_after_get_hit(damage : int)
 signal on_death
 signal on_hit(attacked : Actor)
-signal on_sword_clash(clashed_actor: Actor)
+signal on_weapon_clash(clashed_actor: Actor)
 
 #region Stats
 @export_group("Base Stats", "base")
@@ -24,6 +24,7 @@ signal on_sword_clash(clashed_actor: Actor)
 @export var mod_attack_damage : int = 0
 #endregion
 
+@export var graphics_parent : Node2D
 @export var anim_player : AnimationPlayer
 @export var attack_audio_player : AudioStreamPlayer2D
 @export var weapons : Weapons
@@ -62,7 +63,7 @@ func process_movement():
 	if knockback_vector.length() < 0.25:
 		knockback_vector = Vector2.ZERO
 	movement_vector += knockback_vector
-	move_and_collide(movement_vector * movement_speed)
+	move_and_collide(movement_vector * clampf(movement_speed, 0, 3))
 	movement_vector = Vector2.ZERO
 
 func set__can_aim(_can_aim : bool): weapons.current_weapon.can_aim = _can_aim
@@ -124,6 +125,8 @@ func get_hit(damage : int, stagger : int, knockback : int, attack_dir : Vector2,
 		die()
 
 func die():
+	if is_queued_for_deletion():
+		return
 	on_death.emit()
 	var dp = GameManager.death_particles.instantiate()
 	GameManager.game_parent.add_child(dp)

@@ -7,7 +7,7 @@
 [ext_resource type="Script" path="res://Scripts/WaveSpawner.gd" id="5_2f0ep"]
 [ext_resource type="Script" path="res://Scripts/EnemyWave.gd" id="6_ayu0a"]
 [ext_resource type="Script" path="res://Scripts/EnemySpawner.gd" id="7_58mhg"]
-[ext_resource type="AudioStream" uid="uid://dpoqjkkvsewfc" path="res://Assets/UnderSiege!_byDarrenCurtis.ogg" id="9_v2wm1"]
+[ext_resource type="AudioStream" uid="uid://dpoqjkkvsewfc" path="res://Assets/Audio/UnderSiege!_byDarrenCurtis.ogg" id="9_v2wm1"]
 [ext_resource type="Script" path="res://Scripts/GameMenu.gd" id="10_6n47k"]
 [ext_resource type="Script" path="res://Scripts/VolumeSettings.gd" id="10_o8sgj"]
 [ext_resource type="Theme" uid="uid://dj2tjnejicmva" path="res://Layouts/menu.tres" id="11_bc0xl"]

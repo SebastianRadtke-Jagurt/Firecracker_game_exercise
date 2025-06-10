@@ -9,7 +9,7 @@ var actor : Actor
 var transitions : Array[Transition]
 
 func init(_actor : Actor):
-	self.actor = _actor
+	actor = _actor
 
 func enter():
 	pass
