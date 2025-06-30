@@ -59,8 +59,8 @@ func ultimate_execute(delta : float):
 func ultimate_exit():
 	zone.visible = false
 	zone.monitoring = false
-	actor.set_active_transition("attack_1", true)
-	actor.set_active_transition("dashing", true)
+	actor.state_machine.set_active_transition("attack_1", true)
+	actor.state_machine.set_active_transition("dashing", true)
 	if actor.on_get_hit_check.is_connected(check_counter):
 		actor.on_get_hit_check.disconnect(check_counter)
 	if actor.on_get_hit_deny.is_connected(cast_counter):

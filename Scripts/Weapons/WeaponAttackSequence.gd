@@ -2,6 +2,7 @@ extends State
 class_name StateAttackSequence
 
 @export var weapon : Weapon
+@export var state_name_to_buffer : String
 
 var attacks : Array[Attack]
 var attack_counter : int = 0
@@ -20,8 +21,8 @@ func _ready():
 	for child in get_children():
 		if child is Attack: attacks.append(child as Attack)
 
-func init(_actor : Actor):
-	super.init(_actor)
+func init(_actor : Actor, _state_machine : ActorStateMachine):
+	super.init(_actor, _state_machine)
 	actor.on_after_get_hit.connect(on_after_get_hit)
 
 func _physics_process(delta):
@@ -33,10 +34,10 @@ func enter():
 			actor.decide_AI()
 			return
 		else: 
-			actor.rollback_state(state_group_idx)
+			state_machine.rollback_state(state_group_idx)
 			return
 	
-	actor.buffer_state("idle", state_group_idx)
+	state_machine.buffer_state(state_name_to_buffer, state_group_idx)
 	actor.set__can_get_hit(true)
 	weapon.buffer_attack(attacks[attack_counter])
 	attacks[attack_counter].play()
@@ -53,6 +54,12 @@ func execute(delta : float):
 		exit("")
 		return
 
+func check_inputs():
+	for transition in transitions:
+		if state_machine.get_input.call(transition.input_name) && transition.active:
+			state_machine.buffer_state(transition.state_name, state_group_idx)
+			return
+
 func sequence_fall_out(delta):
 	if sequence_continuity_timer > 0:
 		sequence_continuity_timer -= delta
@@ -63,6 +70,7 @@ func sequence_fall_out(delta):
 func exit(exit_message : String = ""):
 	weapon.set__can_aim(true)
 	weapon.set_active_hurtbox(false)
+	on_exit.emit()
 	super.exit(exit_message)
 
 # Band-aid!

@@ -124,19 +124,18 @@ _data = {
 "staggered": SubResource("Animation_vp3k3")
 }
 
-[node name="Grunt" type="CharacterBody2D" node_paths=PackedStringArray("state_groups", "anim_player", "attack_audio_player", "weapons", "current_state")]
+[node name="Grunt" type="CharacterBody2D" node_paths=PackedStringArray("graphics_parent", "anim_player", "attack_audio_player", "weapons")]
 collision_layer = 2
 script = ExtResource("1_kdtmy")
 approach_distance_min = 30
 approach_distance_max = 40
-state_groups = [NodePath("States")]
 base_movement_speed = 0.7
+graphics_parent = NodePath("CollisionShape2D")
 anim_player = NodePath("AnimationPlayer")
 attack_audio_player = NodePath("AudioStreamPlayer2D")
 weapons = NodePath("Weapons")
 hitbox_layer = 2
 hurtbox_mask = 3
-current_state = NodePath("States/idle")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_2631f")

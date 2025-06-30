@@ -5,8 +5,8 @@ var vector : Vector2 = Vector2.ZERO
 var approach_distance_min : int
 var approach_distance_max : int
 
-func init(_actor : Actor):
-	super.init(_actor)
+func init(_actor : Actor, _state_machine : ActorStateMachine):
+	super.init(_actor, _state_machine)
 	approach_distance_min = (actor as Enemy).approach_distance_min
 	approach_distance_max = (actor as Enemy).approach_distance_max
 

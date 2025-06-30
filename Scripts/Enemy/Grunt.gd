@@ -9,14 +9,14 @@ func _ready():
 	for event in events:
 		events[event].init(self)
 	
-	state_groups[0].states = {
+	state_machine.new_state_group({
 		"idle" : $States/idle as StateIdleMovement,
 		"moving" : $States/StateMoving as StateMoving,
 		"attack_1" : $States/StateWeaponAttack as StateWeaponAttack,
 		"staggered" : $States/staggered as StateStaggered,
-	}
-	for state_group in state_groups:
-		state_group.init(self)
+	})
+	for state_group in state_machine.state_groups:
+		state_group.init(self, state_machine)
 	setup_states()
 	
 	ai_states = {
@@ -28,13 +28,16 @@ func _ready():
 		"attacking" : false as bool
 	}
 	for state in ai_states:
-		ai_states[state].init(self)
+		ai_states[state].init(self, state_machine)
+	weapons.init()
 	decide_AI()
-	current_state.enter()
+	state_machine.state_groups[0].current_state = state_machine.state_groups[0].states["idle"]
+	state_machine.state_groups[0].current_state.enter()
+	super._ready()
 
 func setup_states():
-	state_groups[0].states["idle"].register_transition("attacking", "attack_1")
-	state_groups[0].states["moving"].register_transition("attacking", "attack_1")
+	state_machine.state_groups[0].states["idle"].register_transition("attacking", "attack_1")
+	state_machine.state_groups[0].states["moving"].register_transition("attacking", "attack_1")
 
 func _physics_process(delta):
 	actor_phys_process(delta)

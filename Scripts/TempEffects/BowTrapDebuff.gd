@@ -1,11 +1,12 @@
 extends Buff
 
-func apply_to(actor : Actor):
-	self.actor = actor
+func apply_to(_actor : Actor):
+	self.actor = _actor
 	actor.mod_movement_speed -= 0.6
 	actor.on_get_hit_check.connect(trap_mark_damage)
+	actor.on_death.connect(call_deferred.bind("free"))
 	# TODO - pass timeout time
-	get_tree().create_timer(5).timeout.connect(expire)
+	get_tree().create_timer(5, false, true).timeout.connect(expire)
 
 func trap_mark_damage():
 	# TODO - pass damage

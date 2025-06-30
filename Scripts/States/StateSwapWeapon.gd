@@ -20,8 +20,8 @@ func execute(delta):
 
 func check_inputs():
 	for transition in transitions:
-		if actor.get_input(transition.input_name) && transition.active:
-			actor.buffer_state(transition.state_name, state_group_idx)
+		if state_machine.get_input.call(transition.input_name) && transition.active:
+			state_machine.buffer_state(transition.state_name, state_group_idx)
 			return
 
 func on_choose(next_weapon_idx : int):

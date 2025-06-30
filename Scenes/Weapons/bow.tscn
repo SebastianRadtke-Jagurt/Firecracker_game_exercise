@@ -172,7 +172,6 @@ attack_sequences = [NodePath("StateAttackSequence")]
 starting_attack_cd = 0.0
 damage = 2
 weapon_texture = ExtResource("2_ausa1")
-charge_max = 0
 
 [node name="weapon_offset" type="Node2D" parent="."]
 
@@ -191,6 +190,7 @@ libraries = {
 [node name="StateAttackSequence" type="Node" parent="." node_paths=PackedStringArray("weapon")]
 script = ExtResource("3_t4ooc")
 weapon = NodePath("..")
+state_name_to_buffer = "idle"
 
 [node name="1" type="Node" parent="StateAttackSequence" node_paths=PackedStringArray("anim_player")]
 script = ExtResource("4_iqbgc")
@@ -222,6 +222,7 @@ next_attack_delay = 0.2
 [node name="UltimateAttackSeqence" type="Node" parent="." node_paths=PackedStringArray("weapon")]
 script = ExtResource("3_t4ooc")
 weapon = NodePath("..")
+state_name_to_buffer = "idle"
 
 [node name="1" type="Node" parent="UltimateAttackSeqence" node_paths=PackedStringArray("anim_player")]
 script = ExtResource("4_iqbgc")
@@ -246,6 +247,6 @@ buff_to_apply = NodePath("Bow_Trap_Debuff")
 [node name="Bow_Trap_Debuff" type="Node" parent="Bow_Trap_Debuff_Applier"]
 script = ExtResource("8_1hv5c")
 
-[connection signal="on_init" from="." to="StateAttackSequence" method="init"]
-[connection signal="on_init" from="." to="UltimateAttackSeqence" method="init"]
 [connection signal="on_init" from="." to="Bow_Ultimate_Buff_Applier" method="init"]
+[connection signal="on_init_state_machine" from="." to="StateAttackSequence" method="init"]
+[connection signal="on_init_state_machine" from="." to="UltimateAttackSeqence" method="init"]

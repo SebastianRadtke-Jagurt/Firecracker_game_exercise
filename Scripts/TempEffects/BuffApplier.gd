@@ -10,8 +10,8 @@ var buff_apply_cooldown : float = 0
 
 var buffs_applied : Array[Buff]
 
-func _ready():
-	actor = $"../..".actor
+func init(_actor : Actor):
+	actor = _actor
 	buff_to_apply.init(actor, self)
 
 func connect_applier():

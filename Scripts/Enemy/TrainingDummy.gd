@@ -7,13 +7,13 @@ func _ready():
 	}
 	for event in events:
 		events[event].init(self)
-	state_groups[0].states = {
+	state_machine.state_groups[0].states = {
 		"idle" : $States/idle as StateIdleMovement,
 		"staggered" : $States/staggered as StateStaggered,
 	}
-	for state_group in state_groups:
-		state_group.init(self)
-	current_state.enter()
+	for state_group in state_machine.state_groups:
+		state_group.init(self, state_machine)
+	state_machine.current_state.enter()
 
 func _physics_process(delta):
 	actor_phys_process(delta)

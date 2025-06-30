@@ -512,6 +512,7 @@ libraries = {
 [node name="state_attack_sequence" type="Node" parent="." node_paths=PackedStringArray("weapon")]
 script = ExtResource("4_yk8s1")
 weapon = NodePath("..")
+state_name_to_buffer = "idle"
 
 [node name="1" type="Node" parent="state_attack_sequence" node_paths=PackedStringArray("anim_player")]
 script = ExtResource("5_xfica")
@@ -563,7 +564,7 @@ shape = SubResource("CircleShape2D_1fjr3")
 
 [connection signal="on_init" from="." to="dagger1_offset/dagger1_parent/hurtbox_Area2D" method="init"]
 [connection signal="on_init" from="." to="dagger2_offset/dagger2_parent/hurtbox_Area2D" method="init"]
-[connection signal="on_init" from="." to="state_attack_sequence" method="init"]
+[connection signal="on_init_state_machine" from="." to="state_attack_sequence" method="init"]
 [connection signal="body_entered" from="dagger1_offset/dagger1_parent/hurtbox_Area2D" to="dagger1_offset/dagger1_parent/hurtbox_Area2D" method="_on_body_entered"]
 [connection signal="body_entered" from="dagger2_offset/dagger2_parent/hurtbox_Area2D" to="dagger2_offset/dagger2_parent/hurtbox_Area2D" method="_on_body_entered"]
 [connection signal="body_entered" from="Zone2" to="." method="mark_for_damage"]

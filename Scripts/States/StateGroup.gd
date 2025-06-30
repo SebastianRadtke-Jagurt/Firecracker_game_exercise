@@ -7,9 +7,9 @@ var states : Dictionary
 var previous_state : State
 var buffered_state : String
 
-func init(actor : Actor):
+func init(actor : Actor, state_machine : ActorStateMachine):
 	for state in states:
-		states[state].init(actor)
+		states[state].init(actor, state_machine)
 
 func buffer_state(state : String = ""): buffered_state = state
 

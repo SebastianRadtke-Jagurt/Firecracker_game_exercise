@@ -7,8 +7,8 @@ var stagger_cooldown : float = 0
 @export var stagger_cooldown_max : float = 1
 @export var on_stagger_attack_cd : float = 0
 
-func init(_actor : Actor):
-	super.init(_actor)
+func init(_actor : Actor, _state_machine : ActorStateMachine):
+	super.init(_actor, _state_machine)
 	actor.on_get_hit.connect(get_staggered)
 
 func get_staggered(_damage : int, stagger : int, _knockback : int, _attack_dir : Vector2, _attacker : Actor):
@@ -17,7 +17,7 @@ func get_staggered(_damage : int, stagger : int, _knockback : int, _attack_dir :
 	
 	stagger_buildup += stagger
 	if stagger_buildup > stagger_threshold:
-		actor.current_state.exit("staggered")
+		state_machine.state_groups[0].current_state.exit("staggered")
 		stagger_buildup = 0
 		if on_stagger_attack_cd > 0: actor.weapons.current_weapon.attack_cooldown += on_stagger_attack_cd
 		actor.weapons.current_weapon.cancel_anim()
@@ -41,7 +41,7 @@ func execute(delta):
 		exit("idle")
 	
 	if(actor.get_input("ui_accept")):
-		actor.buffer_state("dashing", state_group_idx)
+		state_machine.buffer_state("dashing", state_group_idx)
 		return
  
 func exit(exit_message : String = ""):

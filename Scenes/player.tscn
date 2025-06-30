@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://b0hx5nkucpnjs"]
+[gd_scene load_steps=30 format=3 uid="uid://b0hx5nkucpnjs"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_4r356"]
 [ext_resource type="Texture2D" uid="uid://ogixvk0fa3d" path="res://Assets/Kenney_Tiny_Dungeon/Tiles/tile_0085.png" id="1_5g541"]
@@ -14,6 +14,7 @@
 [ext_resource type="Script" path="res://Scripts/States/StateIdleMovement.gd" id="8_5llvi"]
 [ext_resource type="PackedScene" uid="uid://bgx0ma4ffyrl0" path="res://Scenes/Weapons/bow.tscn" id="8_7vn5r"]
 [ext_resource type="Texture2D" uid="uid://o6tdeo2pshaq" path="res://Assets/Kenney_Tiny_Dungeon/Tiles/tile_0104.png" id="9_aesfj"]
+[ext_resource type="PackedScene" uid="uid://cm6hici232i7q" path="res://Scenes/Weapons/axe.tscn" id="9_ldd4b"]
 [ext_resource type="Script" path="res://Scripts/States/StateSwapWeapon.gd" id="12_p28k2"]
 [ext_resource type="Script" path="res://Scripts/States/StateSwapWeaponCheck.gd" id="13_afplm"]
 [ext_resource type="Script" path="res://Scripts/States/StateSwapWeaponUltimate.gd" id="13_f077q"]
@@ -172,18 +173,20 @@ _data = {
 "staggered": SubResource("Animation_vp3k3")
 }
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("state_groups", "graphics_parent", "anim_player", "attack_audio_player", "weapons", "current_state")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("graphics_parent", "anim_player", "attack_audio_player", "weapons")]
 collision_layer = 4
 script = ExtResource("1_4r356")
-state_groups = [NodePath("States"), NodePath("States2")]
 base_health = 100
+base_movement_speed = null
+mod_movement_speed = null
+mod_attack_damage = null
 graphics_parent = NodePath("CollisionShape2D")
 anim_player = NodePath("AnimationPlayer")
 attack_audio_player = NodePath("AttackSoundPlayer")
 weapons = NodePath("Weapons")
 hitbox_layer = 3
 hurtbox_mask = 2
-current_state = NodePath("States/idle")
+get_hit_cooldown_max = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_kn6of")
@@ -220,7 +223,7 @@ shape = SubResource("CircleShape2D_xhn5g")
 script = ExtResource("5_2qvo4")
 actor = NodePath("..")
 current_weapon = NodePath("sword")
-weapons = [NodePath("sword"), NodePath("daggers"), NodePath("bow_root")]
+weapons = [NodePath("sword"), NodePath("daggers"), NodePath("bow_root"), NodePath("axe_root")]
 
 [node name="sword" parent="Weapons" instance=ExtResource("6_5f2td")]
 damage = 1
@@ -229,6 +232,9 @@ damage = 1
 visible = false
 
 [node name="bow_root" parent="Weapons" instance=ExtResource("8_7vn5r")]
+visible = false
+
+[node name="axe_root" parent="Weapons" instance=ExtResource("9_ldd4b")]
 visible = false
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

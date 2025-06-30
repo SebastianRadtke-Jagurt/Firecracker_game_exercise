@@ -42,7 +42,6 @@ func shoot_multi(count : int):
 	for i in count:
 		var new_arrow = GameManager.arrow.instantiate()
 		var rot_offset = ceilf(i / 2.0) * deg_to_rad(20) * (-1 if i % 2 == 0 else 1)
-		print(rot_offset)
 		GameManager.game_parent.add_child(new_arrow)
 		new_arrow.on_hit.connect(add_charge.bind(1), CONNECT_ONE_SHOT)
 		new_arrow.global_position = offset.global_position

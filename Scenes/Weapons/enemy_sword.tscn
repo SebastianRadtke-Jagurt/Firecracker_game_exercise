@@ -161,6 +161,7 @@ libraries = {
 [node name="state_attack_sequence" type="Node" parent="." node_paths=PackedStringArray("weapon")]
 script = ExtResource("4_5gsos")
 weapon = NodePath("..")
+state_name_to_buffer = "idle"
 
 [node name="1" type="Node" parent="state_attack_sequence" node_paths=PackedStringArray("anim_player")]
 script = ExtResource("5_6ihhk")
@@ -172,5 +173,5 @@ knockback = 5
 next_attack_delay = 0.1
 
 [connection signal="on_init" from="." to="sword_offset/sword_parent/hurtbox_Area2D" method="init"]
-[connection signal="on_init" from="." to="state_attack_sequence" method="init"]
+[connection signal="on_init_state_machine" from="." to="state_attack_sequence" method="init"]
 [connection signal="body_entered" from="sword_offset/sword_parent/hurtbox_Area2D" to="sword_offset/sword_parent/hurtbox_Area2D" method="_on_body_entered"]

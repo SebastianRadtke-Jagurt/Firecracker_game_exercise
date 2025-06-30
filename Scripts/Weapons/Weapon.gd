@@ -26,16 +26,15 @@ var charge_maxxed : bool:
 		return charge >= charge_max
 
 signal on_init(_actor : Actor)
+signal on_init_state_machine(_actor : Actor, _state_machine : ActorStateMachine)
 signal on_swap_in
 signal on_swap_out
 
 func init(parent : Weapons, _actor : Actor):
 	weapons_parent = parent
 	actor = _actor
-	#if hurtbox != null: hurtbox.init(_actor)
-	#for _as in attack_sequences:
-		#_as.init(_actor)
 	on_init.emit(actor)
+	on_init_state_machine.emit(actor, actor.state_machine)
 
 func _ready():
 	attack_cooldown = starting_attack_cd
