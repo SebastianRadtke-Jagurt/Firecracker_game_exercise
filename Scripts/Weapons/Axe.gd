@@ -13,8 +13,8 @@ var ultimate_input : String = ""
 func _ready():
 	super._ready()
 	ultimates_state_machine.new_state_group({
-		"swing" : $ultimate_swinging as StateAttackSequence,
-		"slam" : $ultimate_slam as StateAttackSequence,
+		"swing" : $ultimate_swinging as WeaponAttackSequence,
+		"slam" : $ultimate_slam as WeaponAttackSequence,
 		"nothing" : $nothing as State,
 	})
 	

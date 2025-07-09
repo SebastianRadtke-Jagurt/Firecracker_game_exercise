@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bpv0qjmmicqae" path="res://Assets/Kenney_Tiny_Dungeon/Tiles/tile_0103.png" id="2_ltu3r"]
 [ext_resource type="Texture2D" uid="uid://d3nh0kxtc4hma" path="res://Assets/daggers.png" id="2_xad4r"]
 [ext_resource type="Script" path="res://Scripts/Hurtbox.gd" id="3_guse1"]
-[ext_resource type="Script" path="res://Scripts/Weapons/WeaponAttackSequence.gd" id="4_yk8s1"]
+[ext_resource type="Script" path="res://Scripts/Weapons/PlayerWeaponAttackSequence.gd" id="5_exrhd"]
 [ext_resource type="Script" path="res://Scripts/States/Attack.gd" id="5_xfica"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2su26"]
@@ -510,7 +510,7 @@ libraries = {
 }
 
 [node name="state_attack_sequence" type="Node" parent="." node_paths=PackedStringArray("weapon")]
-script = ExtResource("4_yk8s1")
+script = ExtResource("5_exrhd")
 weapon = NodePath("..")
 state_name_to_buffer = "idle"
 

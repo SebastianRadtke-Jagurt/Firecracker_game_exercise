@@ -10,6 +10,7 @@ var attack_time : float
 @export var next_attack_delay : float
 @export var displacement : float
 @export var is_parryable : bool
+@export var enemy_pos_locking_dist : int = 0
 
 func _ready():
 	attack_time = anim_player.get_animation(animation_name).length

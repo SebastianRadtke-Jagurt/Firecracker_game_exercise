@@ -1,7 +1,7 @@
 extends Weapon
 class_name Bow
 
-@onready var ultimate_attack_sequence :StateAttackSequence = $UltimateAttackSeqence
+@onready var ultimate_attack_sequence :WeaponAttackSequence = $UltimateAttackSeqence
 @onready var bow_ultimate_buff_applier : BuffApplier = $Bow_Ultimate_Buff_Applier
 @onready var bow_trap_debuff_applier = $Bow_Trap_Debuff_Applier
 

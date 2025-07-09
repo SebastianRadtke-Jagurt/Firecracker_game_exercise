@@ -4,7 +4,7 @@ class_name Weapon
 @export var offset : Node2D
 @export var hurtbox : Hurtbox
 @export var anim_player : AnimationPlayer
-@export var attack_sequences : Array[StateAttackSequence]
+@export var attack_sequences : Array[WeaponAttackSequence]
 @export var starting_attack_cd : float = 1
 
 @export var damage : int  = 1

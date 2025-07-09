@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scripts/Weapons/Bow.gd" id="1_1ryi7"]
 [ext_resource type="Texture2D" uid="uid://bapc6btqj1t0u" path="res://Assets/2D_bow.png" id="2_ausa1"]
-[ext_resource type="Script" path="res://Scripts/Weapons/WeaponAttackSequence.gd" id="3_t4ooc"]
+[ext_resource type="Script" path="res://Scripts/Weapons/PlayerWeaponAttackSequence.gd" id="3_0pyw2"]
 [ext_resource type="Script" path="res://Scripts/States/Attack.gd" id="4_iqbgc"]
 [ext_resource type="Script" path="res://Scripts/TempEffects/BowUltimateBuffApplier.gd" id="5_u1go7"]
 [ext_resource type="Script" path="res://Scripts/TempEffects/BowUltimateBuff.gd" id="6_g4v50"]
@@ -188,7 +188,7 @@ libraries = {
 }
 
 [node name="StateAttackSequence" type="Node" parent="." node_paths=PackedStringArray("weapon")]
-script = ExtResource("3_t4ooc")
+script = ExtResource("3_0pyw2")
 weapon = NodePath("..")
 state_name_to_buffer = "idle"
 
@@ -220,7 +220,7 @@ knockback = 2
 next_attack_delay = 0.2
 
 [node name="UltimateAttackSeqence" type="Node" parent="." node_paths=PackedStringArray("weapon")]
-script = ExtResource("3_t4ooc")
+script = ExtResource("3_0pyw2")
 weapon = NodePath("..")
 state_name_to_buffer = "idle"
 

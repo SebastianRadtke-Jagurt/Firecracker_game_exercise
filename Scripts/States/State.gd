@@ -30,7 +30,7 @@ func check_inputs():
 			return
 
 func exit(exit_message : String = ""):
-	self.state_time = 0
+	state_time = 0
 	state_machine.exit_state(exit_message, state_group_idx)
 	on_exit.emit()
 

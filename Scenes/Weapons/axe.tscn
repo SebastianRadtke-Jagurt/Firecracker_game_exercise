@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Scripts/Weapons/Axe.gd" id="1_sjguv"]
 [ext_resource type="Texture2D" uid="uid://gy4601icaaos" path="res://Assets/Kenney_Tiny_Dungeon/Tiles/tile_0118.png" id="2_fkl7q"]
 [ext_resource type="Script" path="res://Scripts/Hurtbox.gd" id="3_fxion"]
-[ext_resource type="Script" path="res://Scripts/Weapons/WeaponAttackSequence.gd" id="4_g7xc6"]
+[ext_resource type="Script" path="res://Scripts/Weapons/PlayerWeaponAttackSequence.gd" id="4_1d0io"]
 [ext_resource type="Script" path="res://Scripts/States/Attack.gd" id="5_8sjr4"]
 [ext_resource type="Script" path="res://Scripts/States/StateNothing.gd" id="6_s2ntd"]
 
@@ -525,6 +525,7 @@ offset = NodePath("weapon_offset")
 hurtbox = NodePath("weapon_offset/weapon_parent/hurtbox_Area2D")
 anim_player = NodePath("AnimationPlayer")
 attack_sequences = [NodePath("StateAttackSequence")]
+starting_attack_cd = null
 damage = 3
 weapon_texture = ExtResource("2_fkl7q")
 charge_max = 0
@@ -563,7 +564,7 @@ libraries = {
 }
 
 [node name="StateAttackSequence" type="Node" parent="." node_paths=PackedStringArray("weapon")]
-script = ExtResource("4_g7xc6")
+script = ExtResource("4_1d0io")
 weapon = NodePath("..")
 state_name_to_buffer = "idle"
 
@@ -596,7 +597,7 @@ knockback = 3
 next_attack_delay = 0.1
 
 [node name="ultimate_swinging" type="Node" parent="." node_paths=PackedStringArray("weapon")]
-script = ExtResource("4_g7xc6")
+script = ExtResource("4_1d0io")
 weapon = NodePath("..")
 state_name_to_buffer = "swing"
 
@@ -608,6 +609,7 @@ damage = 2
 stagger = 2
 knockback = 5
 displacement = 1.0
+enemy_pos_locking_dist = 24
 
 [node name="2" type="Node" parent="ultimate_swinging" node_paths=PackedStringArray("anim_player")]
 script = ExtResource("5_8sjr4")
@@ -617,9 +619,10 @@ damage = 2
 stagger = 2
 knockback = 5
 displacement = 1.0
+enemy_pos_locking_dist = 24
 
 [node name="ultimate_slam" type="Node" parent="." node_paths=PackedStringArray("weapon")]
-script = ExtResource("4_g7xc6")
+script = ExtResource("4_1d0io")
 weapon = NodePath("..")
 state_name_to_buffer = "nothing"
 

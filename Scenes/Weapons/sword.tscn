@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://o6tdeo2pshaq" path="res://Assets/Kenney_Tiny_Dungeon/Tiles/tile_0104.png" id="1_2px8i"]
 [ext_resource type="Script" path="res://Scripts/Weapons/Sword.gd" id="1_om2px"]
 [ext_resource type="Script" path="res://Scripts/Hurtbox.gd" id="2_g4nwu"]
-[ext_resource type="Script" path="res://Scripts/Weapons/WeaponAttackSequence.gd" id="4_tnt1e"]
+[ext_resource type="Script" path="res://Scripts/Weapons/PlayerWeaponAttackSequence.gd" id="4_b31jq"]
 [ext_resource type="Script" path="res://Scripts/States/Attack.gd" id="5_u56t1"]
 [ext_resource type="Texture2D" uid="uid://bekuk546xg53s" path="res://Assets/circle256x256.png" id="6_i8gv2"]
 [ext_resource type="Script" path="res://Scripts/TempEffects/DeflectBuffApplier.gd" id="7_t46rn"]
@@ -353,7 +353,7 @@ libraries = {
 }
 
 [node name="state_attack_sequence" type="Node" parent="." node_paths=PackedStringArray("weapon")]
-script = ExtResource("4_tnt1e")
+script = ExtResource("4_b31jq")
 weapon = NodePath("..")
 state_name_to_buffer = "idle"
 
@@ -366,6 +366,7 @@ stagger = 2
 knockback = 5
 next_attack_delay = 0.1
 displacement = 3.0
+enemy_pos_locking_dist = 20
 
 [node name="2" type="Node" parent="state_attack_sequence" node_paths=PackedStringArray("anim_player")]
 script = ExtResource("5_u56t1")
@@ -376,6 +377,7 @@ stagger = 2
 knockback = 5
 next_attack_delay = 0.1
 displacement = 3.0
+enemy_pos_locking_dist = 20
 
 [node name="3" type="Node" parent="state_attack_sequence" node_paths=PackedStringArray("anim_player")]
 script = ExtResource("5_u56t1")

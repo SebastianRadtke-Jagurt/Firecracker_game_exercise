@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://b0hx5nkucpnjs"]
+[gd_scene load_steps=31 format=3 uid="uid://b0hx5nkucpnjs"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_4r356"]
 [ext_resource type="Texture2D" uid="uid://ogixvk0fa3d" path="res://Assets/Kenney_Tiny_Dungeon/Tiles/tile_0085.png" id="1_5g541"]
@@ -27,6 +27,9 @@ radius = 8.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_xhn5g"]
 radius = 12.055
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_viawt"]
+size = Vector2(32, 48)
 
 [sub_resource type="Animation" id="Animation_0na2m"]
 length = 0.001
@@ -177,16 +180,12 @@ _data = {
 collision_layer = 4
 script = ExtResource("1_4r356")
 base_health = 100
-base_movement_speed = null
-mod_movement_speed = null
-mod_attack_damage = null
 graphics_parent = NodePath("CollisionShape2D")
 anim_player = NodePath("AnimationPlayer")
 attack_audio_player = NodePath("AttackSoundPlayer")
 weapons = NodePath("Weapons")
 hitbox_layer = 3
 hurtbox_mask = 2
-get_hit_cooldown_max = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_kn6of")
@@ -236,6 +235,17 @@ visible = false
 
 [node name="axe_root" parent="Weapons" instance=ExtResource("9_ldd4b")]
 visible = false
+
+[node name="FrontEnemyDetection Root" type="Node2D" parent="Weapons"]
+
+[node name="FrontEnemyDetection Area2D" type="Area2D" parent="Weapons/FrontEnemyDetection Root"]
+position = Vector2(0, 29)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Weapons/FrontEnemyDetection Root/FrontEnemyDetection Area2D"]
+position = Vector2(0, -5)
+shape = SubResource("RectangleShape2D_viawt")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

@@ -1,5 +1,5 @@
 extends State
-class_name StateAttackSequence
+class_name WeaponAttackSequence
 
 @export var weapon : Weapon
 @export var state_name_to_buffer : String
@@ -45,10 +45,10 @@ func enter():
 	weapon.set__can_aim(false)
 
 func execute(delta : float):
-	self.state_time += delta
+	state_time += delta
 	actor.global_position += attack_dir * attacks[attack_counter].displacement
 	
-	if self.state_time > attacks[attack_counter].attack_time:
+	if state_time > attacks[attack_counter].attack_time:
 		sequence_continuity_timer = sequence_continuity_timer_max
 		attack_counter = (attack_counter + 1) % attack_counter_max
 		exit("")
